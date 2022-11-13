@@ -16,13 +16,13 @@ These tutorials are not designed for
 * learning JS and modern Web app development practices.
 * a web app developer wanting to use Csound as a package in your toolkit
 
-For the first of the above, look at the resources listed at [learning Csound] (https://csound.com/get-started.html) and follow the links. Also look for
+For the first of the above, look at the resources listed at [learning Csound](https://csound.com/get-started.html) and follow the links. Also look for
 courses and videos on the system that may be available (online or otherwise).
 To find out about the processing capabilities, also look at [csound.com](https://csound.com), [Cabbage](https://cabbageaudio.com/),
 and the work at places like [Puremagnetik](https://puremagnetik.com/) where you can see Csound used for various digital audio applications. Finally, if you are a web developer or want to become one, using Csound WASM as part of your ecosystem,
 it is probably best if you follow Steven and Hlodver's [tutorials] (http://kunstmusik.github.io/icsc2022-csound-web).
 
-The tutorials here are organised in the various sub-directories, each with a README explaining what you will see in the code (which is also fully annotated). The repository has everything you need to run the examples locally, and if you want to deploy the pages to your own site, it is just a matter of copying the sources (html, js, csd, etc) as required.
+The tutorials here are organised in the various sub-directories, each with a README explaining what you will see in the code (which is also fully annotated). The repository has everything you need to run the examples locally, and if you want to deploy the pages to your own site, it is just a matter of copying the sources (html, js, csd, etc) as required. You can also fork this to start your own Csound WASM projects.
 
 Requirements
 ----
