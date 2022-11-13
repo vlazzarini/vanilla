@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+</head>
+
+<body>
+<h1>The Absolute Vanilla Guide to Webaudio Csound</h1> 
+
+<p>
+This repository holds a step-by-step guide to using Webaudio Csound (aka Csound
+WASM) from an absolute vanilla perspective. This means that we are
+going to try to demonstrate its use with a minimum of requirements and
+dependencies. This guide should be useful if you are
+</p>
+
+<ul>
+<li> already used to Csound, but with little JS or web app development
+  experience. </li>
+<li>  with little knowledge of Csound or JS, but is keen to know
+  what's all about. </li>
+<li>  an experienced Csounder who wants to find more ways to deploy
+  your music. </li>
+<li>  has some experience with certain web environments like p5.js and
+  wants to add audio to your practice. </li>
+</ul>
+
+<p>
+These tutorials are not designed for
+</p>
+
+<ul>
+<li> learning Csound. </li>
+<li> finding out about the sound processing capabilities of Csound. </li>
+<li> learning JS and modern Web app development practices. </li>
+<li> a web app developer wanting to use Csound as a package in your
+toolkit </li>
+</ul>
+
+<p>
+For the first of the above, look at the resources listed at <a href="https://csound.com/get-started.html">learning Csound</a> and follow the links. Also look for
+courses and videos on the system that may be available (online or otherwise).
+To find out about the processing capabilities, also look at <a
+href="https://csound.com">csound.com</a>, <a
+href="https://cabbageaudio.com/">Cabbage</a>,
+and the work at places like <a
+href="https://puremagnetik.com/">Puremagnetik</a> where you can see
+Csound used for various digital audio applications.
+Finally, if you are a web developer or want to become one, using Csound WASM as part of your ecosystem,
+it is probably best if you follow Steven and Hlodver's <a
+href="http://kunstmusik.github.io/icsc2022-csound-web">tutorials</a>.
+</p>
+
+<p>
+The tutorials here are organised in the various sub-directories, each with a README explaining what you will see in the code (which is also fully annotated). The repository has everything you need to run the examples locally, and if you want to deploy the pages to your own site, it is just a matter of copying the sources (html, js, csd, etc) as required.
+</p>
+
+<h2>
+Requirements
+</h2>
+
+<p>
+There are no external dependencies or requirements, but you will need
+</p>
+
+<ol>
+<li> An up-to-date modern browser (e.g. Chrome, Firefox, Safari, etc). </li>  
+<li> A command-line interpreter (e.g. a terminal, or command.com on
+Windows) to 
+run a local web server, git, etc.  </li>
+<li> A text editor to write html/JS. </li>
+</ol>
+
+<p>
+Pages containing Csound WASM code need to be served via http (the file
+protocol is not enough). You will need to run a local http server, for
+this you can use Python3, through the command
+</p>
+
+<code>
+python3 -m http.server
+</code>
+
+<p>
+The root of the web server is located in the working directory from
+where you run this command. The examples in this repository expect
+this to be run from the top-level directory.
+There are other alternatives to this: you can run the node.js `http-server`, if you have it installed.
+</p>
+
+<p>
+In any case, the URL you will need to give your browser is
+`localhost:port` where `port`
+is set by the server as it starts up. If you were able to display this
+page after starting the http server, then you are on the right track
+</p>
+
+<h2>
+Tutorials
+</h1>
+
+<p>
+The following are the links to the web pages containing the tutorials
+in this guide:
+</p>
+
+<ol>
+<li> <a href="./1.Ping"> Ping<a>: how to import Csound WASM, start an
+  engine, compile code and play a sound in response to a user action. </li>  
+</ol>
+
+
+<hr>
+<address></address>
+<!-- hhmts start -->Last modified: Sun Nov 13 15:35:57 GMT 2022 <!-- hhmts end -->
+</body> </html>
