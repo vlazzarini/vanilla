@@ -45,6 +45,10 @@ endin
 schedule(1,0,1,0.2,A4)
 `;
 ```
+Note that the Csound WASM module is referenced relative to this
+html file location, as it resides in the js directory of the root of this repository. If this
+is moved somewhere else during another deployment, the path to
+its location will need to be updated.
 
 Now we can do all the actions required within a single function called `play()`. The
 comments in the code describe what each line is doing,
