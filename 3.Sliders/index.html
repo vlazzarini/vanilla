@@ -19,9 +19,10 @@ endin
 schedule(1,0,-1)
 `;
 
-// check if sound is on
+// instrument on/off state
 let isOn = false;
 // this is the JS function to start Csound
+// we extend it to toggle the instr on/off
 async function start() {
 // if the Csound object is not initialised
 if(csound == null) {
@@ -83,7 +84,7 @@ async function setParameter(channel, value) {
 <p>
 <input type="button" id="start button" onclick="start()" value="OFF"> </input>
 </p>
-<div id="keys">
+<div id="sliders">
 <p>  
 <input type="range" id="amp" min="0" max="1" value="0" step="0.001"
   oninput="setParameter(id, value)"> <span id="ampval"> 0.000 </span> </input> 
@@ -96,5 +97,5 @@ async function setParameter(channel, value) {
 
   <hr>
 <address></address>
-<!-- hhmts start -->Last modified: Mon Nov 14 14:03:59 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Mon Nov 14 15:17:57 GMT 2022 <!-- hhmts end -->
 </body> </html>

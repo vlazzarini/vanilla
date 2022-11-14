@@ -56,7 +56,11 @@ In any case, the URL you will need to give your browser is
 `localhost:port` where `port` is set by the server as it starts up. 
 
 
+Csound WASM API Reference
+-------
 
+The API reference for Csound WASM can be found in [wasm/browser](https://github.com/csound/csound/tree/master/wasm/browser)
+directory of the Csound [sources](https://github.com/csound/csound).
 
 
 
