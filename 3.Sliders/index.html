@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Sliders</title>
+</head>
+
+<script type="text/javascript"> 
+// csound.js is the Csound WASM module
+const csoundjs = "../js/csound.js";
+// csound is the Csound engine object (null as we start)
+let csound = null;
+
+// csound synthesis code
+const code = `
+instr 1
+  kamp = port(chnget:k("amp"),0.01,-1)
+  kfreq = port(chnget:k("freq"),0.01,-1)
+  out linenr(vco2(0dbfs*kamp,kfreq,10),0.01,0.5,0.01)
+endin
+schedule(1,0,-1)
+`;
+
+// check if sound is on
+let isOn = false;
+// this is the JS function to start Csound
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(csoundjs);
+// create a Csound engine object
+csound = await Csound();
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+// compile csound code
+await csound.compileOrc(code);
+// set the amplitude
+await csound.setControlChannel('amp', 0);
+// set the frequency
+await csound.setControlChannel('freq', 440);
+// start the engine
+await csound.start();
+// change text to ON
+document.getElementById("start button").value = "ON";
+// change colour to RED
+document.getElementById("start button").style.color = "red";
+}
+// if csound engine is running
+else {
+// check if instrument is running
+if(isOn) {
+// turn it off
+await csound.inputMessage("i-1 0 1")
+// change text to OFF
+document.getElementById("start button").value = "OFF";
+// change colour to black
+document.getElementById("start button").style.color = "black";
+} else {
+// turn it on
+await csound.inputMessage("i1 0 -1")
+// change text to ON
+document.getElementById("start button").value = "ON";
+// change text to OFF
+document.getElementById("start button").style.color = "red";
+}
+}
+// toggle instrument state
+isOn = !isOn;
+}
+
+// oninput function
+async function setParameter(channel, value) {
+  // set channel
+  if(csound) await csound.setControlChannel(channel, value);
+  // update display
+  document.getElementById(channel+"val").innerHTML = value;
+}
+
+
+
+</script>
+<body>
+<h1>Sliders</h1>
+<p>
+<input type="button" id="start button" onclick="start()" value="OFF"> </input>
+</p>
+<div id="keys">
+<p>  
+<input type="range" id="amp" min="0" max="1" value="0" step="0.001"
+  oninput="setParameter(id, value)"> <span id="ampval"> 0.000 </span> </input> 
+  </p>
+<p>  
+<input type="range" id="freq" min="100" max="1000" value="440" step="1"
+  oninput="setParameter(id, value)"> <span id="freqval"> 440 </span> </input> 
+</p>    
+</div>
+
+  <hr>
+<address></address>
+<!-- hhmts start -->Last modified: Mon Nov 14 14:03:59 GMT 2022 <!-- hhmts end -->
+</body> </html>

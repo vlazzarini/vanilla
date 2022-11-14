@@ -22,7 +22,7 @@ To find out about the processing capabilities, also look at [csound.com](https:/
 and the work at places like [Puremagnetik](https://puremagnetik.com/) where you can see Csound used for various digital audio applications. Finally, if you are a web developer or want to become one, using Csound WASM as part of your ecosystem,
 it is probably best if you follow Steven and Hlodver's [tutorials](http://kunstmusik.github.io/icsc2022-csound-web).
 
-The tutorials here are organised in the various sub-directories, each
+The tutorials here are organised in various sub-directories, each
 with a README explaining what you will see in the code (which is also
 fully annotated). The repository has everything you need to run the
 examples locally, and if you want to deploy the pages to your own

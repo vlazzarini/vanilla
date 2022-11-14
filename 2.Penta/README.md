@@ -135,18 +135,18 @@ JS functions it is invoking.
 </p>
 <div id="keys">
 <p>  
-<input type="button" id="c" value="60" onmousedown="noteon(this.value,this.id)"
-  onmouseup="noteoff(this.value, this.id)"> </input>
-<input type="button" id="d" value="62" onmousedown="noteon(this.value,this.id)"
-  onmouseup="noteoff(this.value, this.id)"> </input>  
-<input type="button" id="e" value="64" onmousedown="noteon(this.value,this.id)"
-  onmouseup="noteoff(this.value, this.id)"> </input>
-<input type="button" id="g" value="67" onmousedown="noteon(this.value,this.id)"
-  onmouseup="noteoff(this.value,  this.id)"> </input>    
-<input type="button" id="a" value="69" onmousedown="noteon(this.value,  this.id)"
-  onmouseup="noteoff(this.value, this.id)"> </input>
-<input type="button" id="cc" value="72" onmousedown="noteon(this.value,  this.id)"
-  onmouseup="noteoff(this.value, this.id)"> </input>    
+<input type="button" id="c" value="60" onmousedown="noteon(value,id)"
+  onmouseup="noteoff(value, id)"> </input>
+<input type="button" id="d" value="62" onmousedown="noteon(value,id)"
+  onmouseup="noteoff(value, id)"> </input>  
+<input type="button" id="e" value="64" onmousedown="noteon(value,id)"
+  onmouseup="noteoff(value, id)"> </input>
+<input type="button" id="g" value="67" onmousedown="noteon(value,id)"
+  onmouseup="noteoff(value,  id)"> </input>    
+<input type="button" id="a" value="69" onmousedown="noteon(value,  id)"
+  onmouseup="noteoff(value, id)"> </input>
+<input type="button" id="cc" value="72" onmousedown="noteon(value,  id)"
+  onmouseup="noteoff(value, id)"> </input>    
 </p>  
 </div>
 ```
