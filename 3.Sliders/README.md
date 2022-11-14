@@ -122,7 +122,8 @@ async function setParameter(channel, value) {
 
 This function will be invoked in response to an on input action,
 detected on an HTML element (slider). It takes in a channel name
-and the value to set.
+and the value to set. Before it exists, the code also updates a
+HTML element that displays the slider value.
 
 HTML body
 -----
@@ -152,7 +153,8 @@ actions. The latter is only taking place after the slider has moved
 and the control has been let go, so it results in discontinuous
 changes. The former issues calls as the element is being moved, so
 it provides a continuous behaviour, which is
-more appropriate in this application.
+more appropriate in this application. Each slider also contains an
+associated span element, which is used to display its current value.
 
 Conclusions
 ---
