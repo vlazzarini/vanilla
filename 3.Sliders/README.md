@@ -122,7 +122,7 @@ async function setParameter(channel, value) {
 
 This function will be invoked in response to an on input action,
 detected on an HTML element (slider). It takes in a channel name
-and the value to set. Before it exists, the code also updates a
+and the value to set. Before it exits, the code also updates a
 HTML element that displays the slider value.
 
 HTML body
