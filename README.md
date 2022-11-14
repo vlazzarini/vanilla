@@ -20,7 +20,7 @@ For the first of the above, look at the resources listed at [learning Csound](ht
 courses and videos on the system that may be available (online or otherwise).
 To find out about the processing capabilities, also look at [csound.com](https://csound.com), [Cabbage](https://cabbageaudio.com/),
 and the work at places like [Puremagnetik](https://puremagnetik.com/) where you can see Csound used for various digital audio applications. Finally, if you are a web developer or want to become one, using Csound WASM as part of your ecosystem,
-it is probably best if you follow Steven and Hlodver's [tutorials] (http://kunstmusik.github.io/icsc2022-csound-web).
+it is probably best if you follow Steven and Hlodver's [tutorials](http://kunstmusik.github.io/icsc2022-csound-web).
 
 The tutorials here are organised in the various sub-directories, each
 with a README explaining what you will see in the code (which is also
