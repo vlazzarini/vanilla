@@ -26,6 +26,7 @@ bus, using separate named channels,
 
 ```
 // csound synthesis code
+const code = `
 instr 1
   kamp = port(chnget:k("amp"),0.01,-1)
   kfreq = port(chnget:k("freq"),0.01,-1)
