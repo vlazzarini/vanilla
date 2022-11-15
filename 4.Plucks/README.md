@@ -13,7 +13,8 @@ in this demonstration is that of *recursion*, an instrument scheduling
 itself at every instantiation. This is used to create a continuous
 stream of sound events. To stop this we just replace the instrument
 code for one that does not schedule itself and the stream is stopped.
-
+The synthesis code uses a simple plucked-string physical model to
+play notes with different amplitudes, pitches, and durations.
 
 JS Script
 ---
