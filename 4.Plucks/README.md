@@ -155,6 +155,7 @@ The HTML body is simply composed of the start button and a text area
 element that will receive the messages from the handler,
 
 ```
+<p>
 <input type="button" id="start button" onclick="start()" value="OFF"> </input>
 </p>
   <textarea cols="80" rows="1" id="mess"></textarea> 
