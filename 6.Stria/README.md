@@ -131,7 +131,7 @@ Csound messages. This uses a multi-line scrolling display,
 
 ```
 let count = 0;
-const handleMessage = message => {
+function handleMessage(message) {
 // get the display element (called console in the page)
 var element = document.getElementById('console');
 // add the message to HTML content (plus a newline)
