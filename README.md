@@ -37,8 +37,7 @@ Requirements
 To explore these tutorials, you will need
 
 1. An up-to-date modern browser (e.g. Chrome, Firefox, Safari, etc).  
-2. A terminal, or command line, to run a local web server, git, etc.
-4. A web server app or script.
+2. A web server app or script.
 3. A text editor to write html/JS.
 
 *Web server*: pages containing Csound WASM code need to be served via http (the file protocol is not enough). You will need to run a local http server, for this you can use Python3, through the command
