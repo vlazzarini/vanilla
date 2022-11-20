@@ -69,7 +69,7 @@ npm install @csound\browser
 
 where you will find it in the `dist` directory.
 
-Alternatively, this file is also found in a (public URL)[https://www.jsdelivr.com/package/npm/@csound/browser?path=dist]
+Alternatively, this file is also found in a [public URL](https://www.jsdelivr.com/package/npm/@csound/browser?path=dist)
 
 ```
 https://cdn.jsdelivr.net/npm/@csound/browser@6.18.0/dist/csound.js
