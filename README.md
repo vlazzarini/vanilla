@@ -34,7 +34,7 @@ own Csound WASM projects.
 Requirements
 ----
 
-There are no external dependencies, but you will need
+To explore these tutorials, you will need
 
 1. An up-to-date modern browser (e.g. Chrome, Firefox, Safari, etc).  
 2. A command-line interpreter (e.g. a terminal, or command.com on Windows) to
@@ -53,7 +53,28 @@ The root of the web server is located in the working directory from where you ru
 There are other alternatives to this: you can run the node.js `http-server`, if you have it installed.
 
 In any case, the URL you will need to give your browser is
-`localhost:port` where `port` is set by the server as it starts up. 
+`localhost:port` where `port` is set by the server as it starts up.
+
+Csound JS
+---
+
+Csound is implemented in the JS source file `csound.js`, which is
+found in the `js` directory of this repository. For your own projects,
+you can copy this file to the required location, or else you can get
+it using the node.js package manager `npm` by installing the (package)[https://www.npmjs.com/package/@csound/browser] `@csound\browser`
+
+```
+npm install @csound\browser
+```
+
+where you will find it in the `dist` directory.
+
+Alternatively, this file is also found in a (public URL)[https://www.jsdelivr.com/package/npm/@csound/browser?path=dist]
+
+```
+https://cdn.jsdelivr.net/npm/@csound/browser@6.18.0/dist/csound.js
+```
+
 
 
 Csound WASM API Reference
