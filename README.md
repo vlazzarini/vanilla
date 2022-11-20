@@ -37,8 +37,7 @@ Requirements
 To explore these tutorials, you will need
 
 1. An up-to-date modern browser (e.g. Chrome, Firefox, Safari, etc).  
-2. A command-line interpreter (e.g. a terminal, or command.com on Windows) to
-run a local web server, git, etc.
+2. A terminal, or command line, to run a local web server, git, etc.
 4. A web server app or script.
 3. A text editor to write html/JS.
 
