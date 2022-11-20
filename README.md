@@ -61,7 +61,7 @@ Csound JS
 Csound is implemented in the JS source file `csound.js`, which is
 found in the `js` directory of this repository. For your own projects,
 you can copy this file to the required location, or else you can get
-it using the node.js package manager `npm` by installing the (package)[https://www.npmjs.com/package/@csound/browser] `@csound\browser`
+it using the node.js package manager `npm` by installing the [package](https://www.npmjs.com/package/@csound/browser) `@csound\browser`
 
 ```
 npm install @csound\browser
