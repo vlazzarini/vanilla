@@ -56,7 +56,9 @@ endin
 Note that we take the size for table 1 from JS, as this is used to
 hold the waveform data taken from the graphics element. This
 guarantees that the sizes will match between the two code
-components.
+components. This function table is not used directly in the synthesis,
+but as a means to get the data from JS, and as the source for
+the generation of a bandlimited wavetable.
 
 Function table creation/updating is handled by a single function,
 whose operation is regulated by a flag that is set as a new table
