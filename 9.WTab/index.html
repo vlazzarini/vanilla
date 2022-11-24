@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>WTab</title>
+</head>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js">
+</script>
+
+<script type="text/javascript"> 
+// csound.js is the Csound WASM module
+const csoundjs = "../js/csound.js";
+// csound is the Csound engine object (null as we start)
+let csound = null;
+// table length
+let tlen = 512;
+// table array
+let table = new Float32Array(tlen);
+// canvas height
+let height = 256;
+
+// csound synthesis code
+const code = `
+ifn ftgen 1,0,` + tlen + `,2,0
+instr 1
+out linenr(oscili(0dbfs*p4,cpsmidinn(p5),2),0.01,0.5,0.01)
+endin
+
+instr 2
+ifn ftgen 2,0,16384,30,1,1,sr/(2*cpsmidinn(60))
+chnset ifn, "newTable"
+endin
+`;
+
+// this is the JS function to start Csound
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(csoundjs);
+// create a Csound engine object
+csound = await Csound();
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+// no displays
+await csound.setOption("-d");
+// compile csound code
+await csound.compileOrc(code);
+// start the engine
+await csound.start();
+}
+}
+
+// respond to update button press
+async function updateTable() {
+// start Csound engine
+await start();
+// set button text
+this.html("update");
+// create the wavetable
+await createTable();
+}
+
+// created/updated flag
+let created = false;
+// create/update table 
+async function createTable(){
+// if the table needs to be created/updated
+if(!created) {
+// read the list of breakpoints, write to array
+for(k = 0; k < bkpts.length - 3; k+=2) { 
+y1 = bkpts[k+1];
+y2 = bkpts[k+3];
+x1 = bkpts[k];
+x2 = bkpts[k+2];
+inc = (y2-y1)/(x2-x1);
+a = y1;
+// linear interpolation
+for(i=x1; i < x2; i++)  {
+table[i] = a/height - 0.5;
+a += inc;
+}     
+}
+// copy the array into table 1
+await csound.tableCopyIn(1,table);
+// run instr 2 to generate table 2
+await csound.inputMessage('i2 0 0');
+// wait for table number
+tn = 0;
+while(tn != 2)
+tn = await csound.getControlChannel('newTable');
+// copy table 2 into array for display
+tab2 = await csound.tableCopyOut(tn);
+// pos increment
+knc = tab2.length/tlen;
+// clear the breakpoint list
+bkpts = [];
+// write array to breakpoint list
+for(i=0,k=0; i < tlen; i++){
+bkpts.push(i);
+bkpts.push((tab2[k] + 1)*height/2);
+k += knc;
+}
+// set the created/update flag
+created = true;
+// clear control channel
+await csound.setControlChannel('newTable',0);
+}
+}
+
+// breakpoint list for drawing/display
+let bkpts = [];
+// line draw flag
+let lnd = false;
+function setup() {
+// update button
+but = createButton("start");
+but.parent("butts");
+but.mousePressed(updateTable)
+// canvas clear button
+but = createButton("clear");
+but.parent("butts");
+but.mousePressed(clearCanvas)
+// canvas for drawing/display
+cnv = createCanvas(tlen,height);
+cnv.parent("canvas");
+// function for mouse down
+cnv.mousePressed(startDraw);
+// function for mouse up
+cnv.mouseReleased(stopDraw);
+// function for mouse movement
+cnv.mouseMoved(lineDraw);
+// create keys buttons
+notes = [48,50,51,55,58,60];
+notes.forEach(addButton);
+}
+
+// function to create a key button
+function addButton(b,n) {
+// b is the note number
+but = createButton(b.toString(),b.toString());
+but.parent("keys");
+// mouse down
+but.mousePressed(noteon);
+// mouse up
+but.mouseReleased(noteoff);
+}
+
+// this draws background and wavetable
+function draw() {
+background(220);
+ix = 0;
+iy = height/2;
+stroke(0);
+// draw a line connecting each breakpoint
+for(i = 0; i < bkpts.length; i+=2) {
+line(ix,iy,bkpts[i],bkpts[i+1]);
+ix = bkpts[i];
+iy = bkpts[i+1];
+}
+// draw a line at the Y centre
+stroke(255, 0, 0);
+line(0,height/2,tlen,height/2);
+}
+
+// this starts drawing with mouse
+function startDraw(){
+lnd = true;
+}
+
+// this stops drawing with mouse
+function stopDraw() {
+lnd = false;
+}
+
+// holds max x pos
+let ixmax = 0;
+// this function draws a wavetable
+function lineDraw() {
+// if we are in drawing mode
+if(lnd && !created) {
+// take X and Y positions
+x = mouseX;
+y = mouseY;
+// if X is beyond the current X pos
+// and less than the table length
+if(x > ixmax && x < tlen) {
+// add (x,y) to the breakpoints list 
+bkpts.push(x);
+bkpts.push(y);
+// update the max value of x
+ixmax = x;
+} 
+}
+}
+
+// clear canvas
+function clearCanvas() {
+// empty breakpoint list
+bkpts = [];
+// unset flags
+lnd = false;
+created = false;
+// reset max x pos
+ixmax = 0;
+}
+
+// mouse down function
+async function noteon() {
+// get the button value
+note = this.elt.value;
+// create the event command: negative p3 to hold
+s = "i1." + note + " 0 -1 0.2 " + note;
+// display it in the JS console
+console.log(s);
+// send it to the Csound engine
+if(csound) await csound.inputMessage(s)
+}
+
+// mouse up function
+async function noteoff() {
+// get the button value
+note = this.elt.value;
+// create the event command: negative p1 to release
+s = "i-1." + note + " 0 1 0.2 " + note;
+// display it in the JS console
+console.log(s);
+// send it to the Csound engine
+if(csound) await csound.inputMessage(s);
+}
+
+</script>
+<body>
+<h1>WTab</h1>
+<p><div id="butts"> </div></p>
+<p><div id="canvas"> </div></p>
+<p><div id="keys"> </div></p>
+<hr>
+<address></address>
+<!-- hhmts start -->Last modified: Thu Nov 24 10:17:23 GMT 2022 <!-- hhmts end -->
+</body> </html>
