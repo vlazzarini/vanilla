@@ -1,10 +1,12 @@
-Beep
+Render
 ===
 
 This simple example demonstrates how to run Csound offline, rendering
 its output to a file. Once that is completed, we can retrieve the file
 from the local browser filesystem, copy it and make it available for
-opening or downloading. 
+opening or downloading. In general, rendering a complete performance
+is faster than realtime, therefore this is a useful functionality
+provided by Csound.
 
 
 JS Script

@@ -10,6 +10,6 @@ endin
 
 </CsInstruments>
 <CsScore>
-i1 0 10 0.5 440
+i1 0 60 0.5 440
 </CsScore>
 </CsoundSynthesizer>
