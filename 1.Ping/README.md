@@ -74,10 +74,26 @@ await csound.inputMessage('i1 0 1 0.2 440');
 }
 ```
 
-The first branch happens when the `csound` is not yet created. Note that each line uses the `await` code pattern. This is because the function is asynchronous, so we need to block at each point to wait for the JS Promise to be fulfilled before we move on. Csound object methods return Promises, so it is important to respect this if we depend on the code being executed before we continue. The other branch just plays a sound by instantiating (scheduling) instrument 1 with a score-style command.
+The first branch happens when the `csound` is not yet created. Note
+that each line uses the `await` code pattern. We can use this approach
+because the function is marked asynchronous. The methods used to
+manipulate the Csound object return JS Promises, which are objects
+that will be fulfilled once the process invoked has completed. Therefore
+to impose a given order of operations we need to block using `await()` 
+at each point to wait for the JS Promise to be fulfilled before we
+move on. It is always important to respect this if we depend on the
+code being executed before we continue. A Promise may also contain a
+return value, which may be for instance a number or an object.
+This is only available when the Promise is fulfilled.
 
-By the time the HTML page is displayed, this JS is ready to be invoked by the elements
-in the page. So we can hook it up to execute when do an action.
+The other branch of the `start()` function just plays a sound by
+instantiating (scheduling) instrument 1 with a score-style
+command. This can now be done because Csound has started and
+is accepting inputs.
+
+By the time the HTML page is displayed, the JS code in this script is
+ready to be invoked by the elements in the page. So we can hook it up
+to execute via a user action (clicking on the page, in this case).
 
 HTML body
 -----
