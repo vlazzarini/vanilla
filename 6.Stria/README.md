@@ -59,9 +59,13 @@ await csound.fs.writeFile(dest, new Uint8Array(dat));
 Once a promise is returned from this function, we are good to go.
 So we can now modify the `start()` function to use `compileCsd()`,
 which takes the name of a CSD file and compiles it. That is the main
-modification in relation to any of the previous examples.
+modification in relation to any of the previous examples. We also
+show how to access and manipulate the AudioContext which
+was created by Csound.
 
 ```
+// instrument on/off state
+let isOn = false;
 // CSD file name
 const csd = './stria.csd'
 // this is the JS function to start Csound
@@ -71,10 +75,8 @@ async function start() {
 if(csound == null) {
 // import the Csound method from csound.js
 const { Csound } = await import(csoundjs);
-// create a Web Audio context for audio processing
-actx = new AudioContext();
 // create a Csound engine object inside the context actx
-csound = await Csound({audioContext: actx});
+csound = await Csound();
 // copy the CSD file to the Csound local filesystem
 await copyUrlToLocal(csd,csd)
 // compile the code in the CSD file
@@ -87,7 +89,8 @@ isOn = true;
 }
 // start performance if paused
 if(!isOn) {
- actx.resume();
+ // manipulate the AudioContext used by Csound
+ (await csound.getAudioContext()).resume();
  isOn = true;
 }
 }
@@ -96,17 +99,17 @@ if(!isOn) {
 Note that we have also removed the toggling of performance on/off,
 because this function will only be responsible to start playback. We
 will have a separate function to toggle pause on/off, which is only
-operational if the Csound engine has been started,
+operational if the Csound engine (and its audio context) has been started,
 
 ```
 // toggle performance on/off
-function pause() {
+async function pause() {
 if(csound != null) {
 if(isOn) {
- actx.suspend();
+ (await csound.getAudioContext()).suspend();
  isOn = false;
 } else  {
- actx.resume();
+ (await csound.getAudioContext()).resume();
  isOn = true;
 }
 }

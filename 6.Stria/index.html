@@ -8,8 +8,6 @@
 const csoundjs = "../js/csound.js";
 // csound is the Csound engine object (null as we start)
 let csound = null;
-// actx is the Web Audio context object (null as we start)
-let actx = null;
 
 // instrument on/off state
 let isOn = false;
@@ -22,10 +20,8 @@ async function start() {
 if(csound == null) {
 // import the Csound method from csound.js
 const { Csound } = await import(csoundjs);
-// create a Web Audio context for audio processing
-actx = new AudioContext();
 // create a Csound engine object inside the context actx
-csound = await Csound({audioContext: actx});
+csound = await Csound();
 // copy the CSD file to the Csound local filesystem
 await copyUrlToLocal(csd,csd)
 // compile the code in the CSD file
@@ -38,7 +34,7 @@ isOn = true;
 }
 // start performance if paused
 if(!isOn) {
- actx.resume();
+ (await csound.getAudioContext()).resume();
  isOn = true;
 }
 }
@@ -70,13 +66,13 @@ await csound.fs.writeFile(dest, new Uint8Array(dat));
 }
 
 // toggle performance on/off
-function pause() {
+async function pause() {
 if(csound != null) {
 if(isOn) {
- actx.suspend();
+ (await csound.getAudioContext()).suspend();
  isOn = false;
 } else  {
- actx.resume();
+ (await csound.getAudioContext()).resume();
  isOn = true;
 }
 }
@@ -106,5 +102,5 @@ await csound.rewindScore();
     <p>
 <hr>
 <address></address>
-<!-- hhmts start -->Last modified: Sat Nov 19 11:51:57 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Nov 26 14:13:40 GMT 2022 <!-- hhmts end -->
 </body> </html>
