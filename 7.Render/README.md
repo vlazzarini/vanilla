@@ -9,6 +9,16 @@ is faster than realtime, therefore this is a useful functionality
 provided by Csound.
 
 
+CsoundObj API code used
+-----------
+
+The following CsoundObj method is used for the first time in this
+tutorial:
+
+`.fs.readFile(src)`: read a file from the local browser filesystem as
+a byte array.
+
+
 JS Script
 ---
 

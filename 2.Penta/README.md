@@ -11,6 +11,12 @@ seen. For this, there will be two points of interaction
 We will employ three different actions on these buttons:
 clicking, mouse down, and mouse up.
 
+CsoundObj API code used
+-----------
+
+All CsoundObj API code used in this tutorial has already been
+introduced in the earlier example.
+
 JS Script
 ---
 

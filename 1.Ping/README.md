@@ -11,7 +11,19 @@ to more interactive stuff.
 
 So, there are four basic things we need to do then. Or five,
 
-5. If the object is already created, the code is already compiled, so just run the instrument again.
+5. If the object is already created, the code is already compiled, so
+just run the instrument again.
+
+CsoundObj API code used
+-----------
+
+The following  CsoundObj methods are used for the first time  in this tutorial:
+
+1. `Csound()` : constructs a CsoundObj object.
+2. `.setOption()` : sets a Csound option.
+3. `.csoundCompileOrc()` : compiles Csound code.
+4. `.csoundStart()` : starts audio processing.
+5. `.inputMessage()` : sends an event to Csound as score command string.
 
 JS Script
 ---

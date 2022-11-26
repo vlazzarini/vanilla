@@ -14,6 +14,12 @@ graphic libraries such as this and Csound are an excellent combo for
 various creative coding applications.
 
 
+CsoundObj API code used
+-----------
+
+All CsoundObj API code used in this tutorial has already been
+introduced in earlier examples.
+
 JS Script
 ---
 

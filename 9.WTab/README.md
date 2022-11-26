@@ -29,6 +29,17 @@ advantage of it to provide the other UI components to control the
 synth: update and a clear-screen buttons; and a
 pentatonic keyboard.
 
+CsoundObj API code used
+-----------
+
+The following  CsoundObj methods are used for the first time in this tutorial:
+
+1.`. tableCopyIn()`: copies a Float32 array to an existing Csound
+function table.
+2.`.tableCopyOut()`: copies a Csound function table as a Float32
+array.
+3.`.getControlChannel()`: get value of software bus control channel.
+
 
 JS Script
 ---

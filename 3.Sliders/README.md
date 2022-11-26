@@ -15,7 +15,17 @@ would not run because the audio context would be suspended.
 
 The functionality of the start button will be extended so it can
 trigger the instance on/off. Once clicked it will latch on, and can
-be clicked again to turn off the sound. 
+be clicked again to turn off the sound.
+
+CsoundObj API code used
+-----------
+
+The following CsoundObj method is used for the first time in this
+tutorial:
+
+`.setControlChannel()`: sets the value of a Csound software bus
+control channel.
+
 
 JS Script
 ---

@@ -21,6 +21,16 @@ The example should demonstrate how to get the Csound node and connect to another
 node in the context. We will also show how we can use the Audio
 Context object to control the processing.
 
+CsoundObj API code used
+-----------
+
+The following CsoundObj method is used for the first time in this
+tutorial:
+
+`.getNode()`: obtains the WebAudio Node object corresponding to the
+Csound engine.
+
+
 JS Script
 ---
 

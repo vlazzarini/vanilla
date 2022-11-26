@@ -25,6 +25,18 @@ playback with simple function calls responding to play, pause, and
 rewind buttons. These ideas can be applied to create interactive
 performances of complete pieces, such as Stria.
 
+CsoundObj API code used
+-----------
+
+The following  CsoundObj methods are used for the first time in this
+tutorial:
+
+1.`.getAudioContext()`: obtains the WebAudio AudioContext object in which the
+Csound engine is running.
+2.`.fs.writeFile()`: write a JS byte array as a file in the local
+   browser filesystem.
+3.`.compileCsd()`: compiles a CSD file.
+
 JS Script
 ---
 
