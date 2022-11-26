@@ -40,18 +40,16 @@ To explore these tutorials, you will need
 2. A web server app or script.
 3. A text editor to write html/JS.
 
-*Web server*: pages containing Csound WASM code need to be served via http (the file protocol is not enough). You will need to run a local http server, for this you can use Python3, through the command
-
-```
-python3 -m http.server
-```
-
-The root of the web server is located in the working directory from where you run this command. The examples in this repository expect this to be run from the top-level directory.
-
-There are other alternatives to this: you can run the node.js `http-server`, if you have it installed.
-
-In any case, the URL you will need to give your browser is
-`localhost:port` where `port` is set by the server as it starts up.
+*Web server*: pages containing Csound WASM code need to be served via
+http (the file protocol is not enough). You will need to run a local
+http server, for this you can use Python3, through the command `python3 -m http.server`.
+The root of the web server is located in the working directory from
+where you run this command. The examples in this repository expect
+this server to be run from the top-level directory. There are other
+alternatives to this, for example, you can run the node.js
+`http-server`, if you have it installed. In any case, the URL you will
+need to give your browser is `localhost:port` where `port` is set by
+the server as it starts up. More details are given below
 
 Csound JS
 ---
@@ -67,19 +65,75 @@ npm install @csound/browser
 
 where you will find it in the `dist` directory.
 
-Alternatively, this file is also found in a [public URL](https://www.jsdelivr.com/package/npm/@csound/browser?path=dist)
+Alternatively, this file is also found in a
+[public URL](https://www.jsdelivr.com/package/npm/@csound/browser?path=dist),
+for example, for version 6.18.0,
 
 ```
 https://cdn.jsdelivr.net/npm/@csound/browser@6.18.0/dist/csound.js
 ```
-
-
 
 Csound WASM API Reference
 -------
 
 The API reference for Csound WASM can be found in [wasm/browser](https://github.com/csound/csound/tree/master/wasm/browser)
 directory of the Csound [sources](https://github.com/csound/csound).
+
+Start Here
+-------
+
+If you have no experience programming for the web, here are a few
+pointers to start with. I would recommend looking at the HTML5 and JS
+tutorials at https://www.w3schools.com/, which provide really good
+introductions to the area.
+
+As far as these tutorials are concerned, you can run these directly in
+your browser by following the link to the site hosted by github,
+https://vlazzarini.github.io/vanilla/.
+
+To start playing and modifying these examples in your computer,
+open a terminal/command-line and clone this repository using git:
+
+```
+git clone https://github.com/vlazzarini/vanilla
+```
+
+and cd to its top-level directory
+
+```
+cd vanilla
+```
+
+As outlined above, you now need to start a http server in your
+computer. If you have Python 3 installed in your computer, run
+the command
+
+```
+python3 -m http.server
+```
+
+Or else, you can install node.js (https://nodejs.org/en/download/),
+which comes with the a server, which can be started by
+
+```
+http-server
+```
+
+Now open your browser and enter the URL given by the server at the
+console, which should be `localhost:xxxx`, where `xxxx` is the port
+that depends on the server started. You will see the `index.html`
+page and you can follow the links to the different tutorials.
+
+Each tutorial is given as an `index.html` in the respective directory.
+You can open that file with your prefered text editor and explore it,
+making modifications, etc. On page reload, your changes should take
+effect. Also note that each directory has a README discussing the
+example in great detail.
+
+
+
+
+
 
 
 
