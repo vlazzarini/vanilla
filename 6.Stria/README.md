@@ -32,10 +32,10 @@ The following  CsoundObj methods are used for the first time in this
 tutorial:
 
 1.`.getAudioContext()`: obtains the WebAudio AudioContext object in which the
-Csound engine is running.
+Csound engine is running.  
 2.`.fs.writeFile()`: write a JS byte array as a file in the local
-   browser filesystem.
-3.`.compileCsd()`: compiles a CSD file.
+   browser filesystem.  
+3.`.compileCsd()`: compiles a CSD file.  
 
 JS Script
 ---

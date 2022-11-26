@@ -22,7 +22,7 @@ CsoundObj API code used
 The following  CsoundObj methods are used for the first time  in this
 tutorial:
 
-1. `.evalCodel()`: evaluate Csound code sent as a string.
+1. `.evalCodel()`: evaluate Csound code sent as a string.  
 2.`.on()`: registers a callback to respond to a specific event.
 
 
