@@ -111,7 +111,7 @@ the command
 python3 -m http.server
 ```
 
-Or else, you can install node.js (https://nodejs.org/en/download/),
+Alternatively, you can install [node.js](https://nodejs.org/en/download/),
 which comes with the a server, which can be started by
 
 ```
@@ -127,7 +127,8 @@ Each tutorial is given as an `index.html` in the respective directory.
 You can open that file with your prefered text editor and explore it,
 making modifications, etc. On page reload, your changes should take
 effect. Also note that each directory has a README discussing the
-example in great detail.
+example in great detail, and a link to is given on the respective
+index.html page.
 
 Tutorials
 ---
