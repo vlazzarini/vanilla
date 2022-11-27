@@ -112,7 +112,7 @@ python3 -m http.server
 ```
 
 Alternatively, you can install [node.js](https://nodejs.org/en/download/),
-which comes with the a server, which can be started by
+which comes with a http server, started by the command
 
 ```
 http-server
