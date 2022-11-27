@@ -31,11 +31,11 @@ CsoundObj API code used
 The following  CsoundObj methods are used for the first time in this
 tutorial:
 
-1.`.getAudioContext()`: obtains the WebAudio AudioContext object in which the
-Csound engine is running.  
-2.`.fs.writeFile()`: write a JS byte array as a file in the local
+1.`.fs.writeFile()`: write a JS byte array as a file in the local
    browser filesystem.  
-3.`.compileCsd()`: compiles a CSD file.  
+2.`.compileCsd()`: compiles a CSD file.  
+3.`.pause()`: pauses performance.  
+4.`.resume()`: resumes peformance.  
 
 JS Script
 ---
@@ -101,8 +101,8 @@ isOn = true;
 }
 // start performance if paused
 if(!isOn) {
- // manipulate the AudioContext used by Csound
- (await csound.getAudioContext()).resume();
+ // resume performance if paused
+ await csound.resume();
  isOn = true;
 }
 }
@@ -111,17 +111,17 @@ if(!isOn) {
 Note that we have also removed the toggling of performance on/off,
 because this function will only be responsible to start playback. We
 will have a separate function to toggle pause on/off, which is only
-operational if the Csound engine (and its audio context) has been started,
+operational if the Csound engine has been started,
 
 ```
 // toggle performance on/off
 async function pause() {
 if(csound != null) {
 if(isOn) {
- (await csound.getAudioContext()).suspend();
+ await csound.pause();
  isOn = false;
 } else  {
- (await csound.getAudioContext()).resume();
+ await csound.resume();
  isOn = true;
 }
 }

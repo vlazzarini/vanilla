@@ -34,7 +34,7 @@ isOn = true;
 }
 // start performance if paused
 if(!isOn) {
- (await csound.getAudioContext()).resume();
+ await csound.resume();
  isOn = true;
 }
 }
@@ -69,10 +69,10 @@ await csound.fs.writeFile(dest, new Uint8Array(dat));
 async function pause() {
 if(csound != null) {
 if(isOn) {
- (await csound.getAudioContext()).suspend();
+ await csound.pause();
  isOn = false;
 } else  {
- (await csound.getAudioContext()).resume();
+ await csound.resume();
  isOn = true;
 }
 }
@@ -102,5 +102,5 @@ await csound.rewindScore();
     <p>
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sun Nov 27 11:58:55 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sun Nov 27 21:20:26 GMT 2022 <!-- hhmts end -->
 </body> </html>
