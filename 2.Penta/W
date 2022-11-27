@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Penta</title>
+</head>
+
+<script type="text/javascript"> 
+// csound.js is the Csound WASM module
+const csoundjs = "../js/csound.js";
+// csound is the Csound engine object (null as we start)
+let csound = null;
+
+// csound synthesis code
+const code = `
+instr 1
+  out linenr(vco2(0dbfs*p4,cpsmidinn(p5)),0.01,0.5,0.01)
+endin
+`;
+
+// this is the JS function to start Csound
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(csoundjs);
+// create a Csound engine object
+csound = await Csound();
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+// compile csound code
+await csound.compileOrc(code);
+// start the engine
+await csound.start();
+// change text to ON
+document.getElementById("start button").value = "ON";
+// change colour to RED
+document.getElementById("start button").style.color = "red";
+}
+}
+
+// mouse down function
+async function noteon(note,id) {
+// create the event command: negative p3 to hold
+s = "i1." + note + " 0 -1 0.2 " + note;
+// display it in the JS console
+console.log(s);
+// send it to the Csound engine
+if(csound) await csound.inputMessage(s)
+// change the colour
+document.getElementById(id).style.color = "blue";
+}
+
+// mouse up function
+async function noteoff(note,id) {
+// create the event command: negative p1 to release
+s = "i-1." + note + " 0 1 0.2 " + note;
+// display it in the JS console
+console.log(s);
+// send it to the Csound engine
+if(csound) await csound.inputMessage(s)
+// change the colour back
+document.getElementById(id).style.color = "black";
+}
+
+
+</script>
+<body>
+<h1>Penta</h1>
+<p>
+<input type="button" id="start button" onclick="start()" value="OFF"> </input>
+</p>
+<div id="keys">
+<p>  
+<input type="button" id="c" value="60" onmousedown="noteon(value,id)"
+  onmouseup="noteoff(value, id)"> </input>
+<input type="button" id="d" value="62" onmousedown="noteon(value,id)"
+  onmouseup="noteoff(value, id)"> </input>
+<input type="button" id="e" value="64" onmousedown="noteon(value,id)"
+  onmouseup="noteoff(value, id)"> </input>
+<input type="button" id="g" value="67" onmousedown="noteon(value,id)"
+  onmouseup="noteoff(value,  id)"> </input>
+<input type="button" id="a" value="69" onmousedown="noteon(value,  id)"
+  onmouseup="noteoff(value, id)"> </input>
+<input type="button" id="cc" value="72" onmousedown="noteon(value,  id)"
+  onmouseup="noteoff(value, id)"> </input>  
+</p>  
+</div>
+
+  <hr>
+<address></address>
+<!-- hhmts start -->Last modified: Wed Nov 23 12:22:05 GMT 2022 <!-- hhmts end -->
+</body> </html>

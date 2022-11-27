@@ -1,0 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>README</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  fetch("./README.md")      
+    .then(response => response.blob()).
+    .then(blob => blob.text())         
+    .then(markdown => {        
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+    });
+</script>
+</head>
+<body>
+<div id="content"></div>
+<hr>
+<address></address>
+<!-- hhmts start -->Last modified: Sun Nov 27 10:56:36 GMT 2022 <!-- hhmts end -->
+</body> </html>
