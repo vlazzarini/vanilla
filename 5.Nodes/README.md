@@ -187,7 +187,7 @@ ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 // start drawing
 ctx.beginPath();
 // create lines between samples
-for (t = 0; t < s.length; t++)
+for (let t = 0; t < s.length; t++)
  ctx.lineTo(t,ctx.canvas.height*(0.5 - s[t]*0.5));
 // draw the plot
 ctx.stroke();
