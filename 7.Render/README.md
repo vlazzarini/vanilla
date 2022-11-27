@@ -89,9 +89,9 @@ representing it,
 // copy file from local and return a URL for it
 async function copyUrlFromLocal(src,t) {
 // get the file as a Uint8Array
-data = await csound.fs.readFile(src);
+let data = await csound.fs.readFile(src);
 // create a data blob
-destfile = new Blob([data.buffer], { type: t});
+let destfile = new Blob([data.buffer], { type: t});
 // create a URL for it
 return window.URL.createObjectURL(destfile);
 }
@@ -105,7 +105,7 @@ Now, the user can have two options:
 // this is called by the open button
 async function openf() {
 // create an anchor element
-a = document.createElement('a');
+let a = document.createElement('a');
 // append it to html body
 document.body.appendChild(a);
 // set the anchor URL
@@ -122,7 +122,7 @@ a.click();
 // this is called by the download button
 async function download() {
 // create an anchor element
-a = document.createElement('a');
+let a = document.createElement('a');
 // append it to html body
 document.body.appendChild(a);
 // set the anchor URL
