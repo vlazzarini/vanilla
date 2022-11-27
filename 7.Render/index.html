@@ -40,6 +40,7 @@ await csound.on("renderEnded", finish);
 }
 }
 
+let fwav = null;
 // this is called on render end
 async function finish() {
 // stop Csound and close output file
@@ -57,7 +58,7 @@ document.getElementById('open').disabled = false;
 // this is called by the download button
 async function download() {
 // create an anchor element
-a = document.createElement('a');
+let a = document.createElement('a');
 // append it to html body
 document.body.appendChild(a);
 // set the anchor URL
@@ -71,7 +72,7 @@ a.click();
 // this is called by the open button
 async function openf() {
 // create an anchor element
-a = document.createElement('a');
+let a = document.createElement('a');
 // append it to html body
 document.body.appendChild(a);
 // set the anchor URL
@@ -85,18 +86,18 @@ a.click();
 // copy file from local and return a URL for it
 async function copyUrlFromLocal(src,t) {
 // get the file as a Uint8Array
-data = await csound.fs.readFile(src);
+let data = await csound.fs.readFile(src);
 // create a data blob
-destfile = new Blob([data.buffer], { type: t});
+let destfile = new Blob([data.buffer], { type: t});
 // create a URL for it
 return window.URL.createObjectURL(destfile);
 }
 
 async function copyUrlToLocal(src, dest) {
 // fetch the file
-srcfile = await fetch(src, {cache: "no-store"})
+let srcfile = await fetch(src, {cache: "no-store"})
 // get the file data as an array
-dat = await srcfile.arrayBuffer();
+let dat = await srcfile.arrayBuffer();
 // write the data as a new file in the filesystem
 await csound.fs.writeFile(dest, new Uint8Array(dat));
 }
@@ -104,7 +105,7 @@ await csound.fs.writeFile(dest, new Uint8Array(dat));
 let count = 0;
 function handleMessage(message) {
 // get the display element (called console in the page)
-var element = document.getElementById('console');
+let element = document.getElementById('console');
 // add the message to HTML content (plus a newline)
 element.innerHTML += message + '\n';
 // focus on bottom, new messages make the display scroll down
