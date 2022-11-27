@@ -140,7 +140,7 @@ Csound WASM, start an engine, compile code and play a sound in
 response to a user action.  
 2.[Penta](2.Penta/.): this example sets up a HTML5
   button keyboard to control Csound events.  
-3.[Sliders](3.Sliders/r.): in this tutorial, we use HTML5
+3.[Sliders](3.Sliders/): in this tutorial, we use HTML5
   range input elements to control sound synthesis parameters.  
 4.[Plucks](4.Plucks/.): this shows how to evaluate code on
 the fly and display Csound console messages.  
