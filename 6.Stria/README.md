@@ -60,9 +60,9 @@ to an array, and then used that data to write the local file,
 // Copy file to local filesystem
 async function copyUrlToLocal(src, dest) {
 // fetch the file
-srcfile = await fetch(src)
+let srcfile = await fetch(src)
 // get the file data as an array
-dat = await srcfile.arrayBuffer();
+let dat = await srcfile.arrayBuffer();
 // write the data as a new file in the filesystem
 await csound.fs.writeFile(dest, new Uint8Array(dat));
 }
@@ -148,7 +148,7 @@ Csound messages. This uses a multi-line scrolling display,
 let count = 0;
 function handleMessage(message) {
 // get the display element (called console in the page)
-var element = document.getElementById('console');
+let element = document.getElementById('console');
 // add the message to HTML content (plus a newline)
 element.innerHTML += message + '\n';
 // focus on bottom, new messages make the display scroll down
