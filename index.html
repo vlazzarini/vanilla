@@ -1,172 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html> <head>
-<title></title>
+<title>Vanilla Guide to Csound WASM</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  fetch("README.md")      
+    .then(response => response.blob())
+    .then(blob => blob.text())         
+    .then(markdown => {        
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+    });
+</script>
 </head>
-
 <body>
-<h1>The Absolute Vanilla Guide to Webaudio Csound</h1> 
-
-<p>
-This repository holds a step-by-step guide to using Webaudio Csound (aka Csound
-WASM) from an absolute vanilla perspective. This means that we are
-going to try to demonstrate its use with a minimum of requirements and
-dependencies. This guide should be useful if you are
-</p>
-
-<ul>
-<li> already used to Csound, but with little JS or web app development
-  experience. </li>
-<li> someone with little knowledge of Csound or JS, but is keen to
-  know what's all about. </li>
-<li>  an experienced Csounder who wants to find more ways to deploy
-  your music. </li>
-<li>  has some experience with certain web environments like p5.js and
-  wants to add audio to your practice. </li>
-</ul>
-
-<p>
-These tutorials are not designed for
-</p>
-
-<ul>
-<li> learning Csound. </li>
-<li> finding out about the sound processing capabilities of Csound. </li>
-<li> learning JS and modern Web app development practices. </li>
-<li> a web app developer wanting to use Csound as a package in your
-toolkit </li>
-</ul>
-
-<p>
-For the first of the above, look at the resources listed at <a href="https://csound.com/get-started.html">learning Csound</a> and follow the links. Also look for
-courses and videos on the system that may be available (online or otherwise).
-To find out about the processing capabilities, also look at <a
-href="https://csound.com">csound.com</a>, <a
-href="https://cabbageaudio.com/">Cabbage</a>,
-and the work at places like <a
-href="https://puremagnetik.com/">Puremagnetik</a> where you can see
-Csound used for various digital audio applications.
-Finally, if you are a web developer with some
-experience, and wants to use Csound WASM as part of your ecosystem,
-it is probably best if you follow Steven and Hlodver's <a
-href="http://kunstmusik.github.io/icsc2022-csound-web">tutorials</a>.
-</p>
-
-<p>
-The tutorials here are organised in the various <a
-href=https://github.com/vlazzarini/vanilla/>sub-directories</a>, each
-with a README explaining what you will see in the code (which is also
-fully annotated). The repository has everything you need to run the
-examples locally, and if you want to deploy the pages to your own
-site, it is just a matter of copying the sources (html, js, csd, etc)
-as required. The Csound WASM code is given in the js directory of
-these sources. You can also fork this whole repository to start your
-own Csound WASM projects.
-
-</p>
-
-<h2>
-Requirements
-</h2>
-
-<p>
-To explore these tutorials, you will need
-</p>
-
-<ol>
-<li> An up-to-date modern browser (e.g. Chrome, Firefox, Safari, etc). </li>  
-<li> A web server application or script</li>
-<li> A text editor to write html/JS. </li>
-</ol>
-
-<p>
-Pages containing Csound WASM code need to be served via http (the file
-protocol is not enough). You will need to run a local http server, for
-this you can use Python3, through the command
-</p>
-
-<code>
-python3 -m http.server
-</code>
-
-<p>
-The root of the web server is located in the working directory from
-where you run this command. The examples in this repository expect
-this to be run from the top-level directory.
-There are other alternatives to this: you can run the node.js `http-server`, if you have it installed.
-</p>
-
-<p>
-In any case, the URL you will need to give your browser is
-`localhost:port` where `port`
-is set by the server as it starts up. If you were able to display this
-page after starting the http server, then you are on the right track
-</p>
-
-<h2>
-Csound JS
-</h2>
-<p>
-Csound is implemented in the JS source file csound.js, which is
-found in the js directory of this repository. For your own projects,
-you can copy this file to the required location, or else you can get
-it using the node.js package manager npm by installing the <a
-href=[https://www.npmjs.com/package/@csound/browser">package</a>
-@csound\browser
-</p>
-
-<code>
-npm install @csound\browser
-</code>
-
-<p>
-where you will find it in the dist directory.
-</p>
-
-<h2>
-Tutorials
-</h2>
-
-<p>
-The following are the links to the web pages containing the tutorials
-in this guide. New tutorials will appear here as they are developed:
-</p>
-
-<ol>
-<li> <a href="./1.Ping">Ping<a>: this demonstrates how to import
-  Csound WASM, start an engine, compile code and play a sound in
-  response to a user action. </li>
-<li> <a href="./2.Penta">Penta<a>: this example sets up a HTML5
-  button keyboard to control Csound events. </li>
-<li> <a href="./3.Sliders">Sliders<a>: in this tutorial, we use HTML5
-  range input elements to control sound synthesis parameters. </li>
-<li> <a href="./4.Plucks">Plucks<a>: this shows how to evaluate code on
-  the fly and display Csound console messages.</li>
-<li> <a href="./5.Nodes">Nodes<a>: this example places Csound within the
-  Web Audio API context and connecting to other audio Nodes.</li>
-<li> <a href="./6.Stria">Stria<a>: this demonstrates how to deal with
-  server files and control playback of the numeric score.</li>
-<li> <a href="./7.Render">Render <a>: this tutorial shows offline
-  rendering, as well as opening and downloading output audio
-  files.</li>
-<li> <a href="./8.Reso">Reso<a>: in this example, we
-  interface Csound with an external JS API, p5.js, which
-  provides realtime performance controls for the instrument.</li>
-<li> <a href="./9.WTab">WTab<a>: this demonstrates the use of
-  function tables and how to transfer data in and out of Csound and an
-  interactive graphical user interface provided by p5.js</li>     
-</ol>
-
-These tutorials can be accessed and forked from <a href=https://github.com/vlazzarini/vanilla/>github</a>
-
-<h2>
-Csound WASM API Reference
-</h2>
-
-The API reference for Csound WASM can be found in the <a href=https://github.com/csound/csound/tree/master/wasm/browser>wasm/browser</a>
-directory of the Csound <a href=https://github.com/csound/csound>sources</a>.
-
-
+<div id="content"></div>
 <hr>
 <address></address>
-<!-- hhmts start -->Last modified: Sat Nov 26 13:52:41 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sun Nov 27 11:11:16 GMT 2022 <!-- hhmts end -->
 </body> </html>
