@@ -3,17 +3,20 @@
 <title>README</title>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-  fetch("./README.md")      
+  fetch("./README.md", { cache:"no-store"})      
     .then(response => response.blob())
     .then(blob => blob.text())         
     .then(markdown => {        
       document.getElementById("content").innerHTML = marked.parse(markdown);
-    });
+});
+
 </script>
 </head>
 <body>
 <div id="content"></div>
+<h2><a href="./index.html">Run Example</a></H2>
 <hr>
 <address></address>
-<!-- hhmts start -->Last modified: Sun Nov 27 11:10:48 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sun Nov 27 11:52:32 GMT 2022 <!-- hhmts end -->
 </body> </html>
+

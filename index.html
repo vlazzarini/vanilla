@@ -3,7 +3,7 @@
 <title>Vanilla Guide to Csound WASM</title>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-  fetch("README.md")      
+  fetch("README.md", { cache:"no-store" } )      
     .then(response => response.blob())
     .then(blob => blob.text())         
     .then(markdown => {        
@@ -15,5 +15,5 @@
 <div id="content"></div>
 <hr>
 <address></address>
-<!-- hhmts start -->Last modified: Sun Nov 27 11:11:16 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sun Nov 27 11:32:36 GMT 2022 <!-- hhmts end -->
 </body> </html>

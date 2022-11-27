@@ -68,20 +68,14 @@ it using the node.js package manager `npm` by installing the [package](https://w
 npm install @csound/browser
 ```
 
-where you will find it in the `dist` directory.
+where you will find it in the `dist` directory. Alternatively, this file is also found in a [public URL](https://www.jsdelivr.com/package/npm/@csound/browser?path=dist).
 
-Alternatively, this file is also found in a
-[public URL](https://www.jsdelivr.com/package/npm/@csound/browser?path=dist),
-for example, for version 6.18.0,
-
-```
-https://cdn.jsdelivr.net/npm/@csound/browser@6.18.0/dist/csound.js
-```
 
 Csound WASM API Reference
 -------
 
-The API reference for Csound WASM can be found in [wasm/browser](https://github.com/csound/csound/tree/master/wasm/browser)
+The API reference for Csound WASM can be found in
+[wasm/browser](https://github.com/csound/csound/tree/master/wasm/browser)
 directory of the Csound [sources](https://github.com/csound/csound).
 
 Start Here
@@ -135,8 +129,37 @@ making modifications, etc. On page reload, your changes should take
 effect. Also note that each directory has a README discussing the
 example in great detail.
 
+Tutorials
+---
 
+The following are the links to the web pages containing the tutorials
+in this guide. New tutorials will appear here as they are developed:
 
+1.[Ping](1.Ping/.): this demonstrates how to import
+Csound WASM, start an engine, compile code and play a sound in
+response to a user action.  
+2.[Penta](2.Penta/.): this example sets up a HTML5
+  button keyboard to control Csound events.  
+3.[Sliders](3.Sliders/r.): in this tutorial, we use HTML5
+  range input elements to control sound synthesis parameters.  
+4.[Plucks](4.Plucks/.): this shows how to evaluate code on
+the fly and display Csound console messages.  
+5.[Nodes](5.Nodes/.): this example places Csound within the
+ Web Audio API context and connecting to other audio Nodes.  
+6.[Stria](6.Stria/.): this demonstrates how to deal with
+  server files and control playback of the numeric score.  
+7.[Render](7.Render/.): this tutorial shows offline
+  rendering, as well as opening and downloading output audio
+  files.  
+8.[Reso](8.Reso/.): in this example, we
+  interface Csound with an external JS API, p5.js, which
+  provides realtime performance controls for the instrument.  
+9.[WTab](9.WTab/.): this demonstrates the use of
+  function tables and how to transfer data in and out of Csound and an
+  interactive graphical user interface provided by p5.js.
+
+These tutorials can be accessed and forked from
+[github](https://github.com/vlazzarini/vanilla/).
 
 
 
