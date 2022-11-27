@@ -104,15 +104,15 @@ async function createTable(){
 // if the table needs to be created/updated
 if(!created) {
 // read the list of breakpoints, write to array
-for(k = 0; k < bkpts.length - 3; k+=2) { 
-y1 = bkpts[k+1];
-y2 = bkpts[k+3];
-x1 = bkpts[k];
-x2 = bkpts[k+2];
-inc = (y2-y1)/(x2-x1);
-a = y1;
+for(let k = 0; k < bkpts.length - 3; k+=2) { 
+let y1 = bkpts[k+1];
+let y2 = bkpts[k+3];
+let x1 = bkpts[k];
+let x2 = bkpts[k+2];
+let inc = (y2-y1)/(x2-x1);
+let a = y1;
 // linear interpolation
-for(i=x1; i < x2; i++)  {
+for(let i=x1; i < x2; i++)  {
 table[i] = a/height - 0.5;
 a += inc;
 }     
@@ -122,17 +122,17 @@ await csound.tableCopyIn(1,table);
 // run instr 2 to generate table 2
 await csound.inputMessage('i2 0 0');
 // wait for table number
-tn = 0;
+let tn = 0;
 while(tn != 2)
 tn = await csound.getControlChannel('newTable');
 // copy table 2 into array for display
-tab2 = await csound.tableCopyOut(tn);
+let tab2 = await csound.tableCopyOut(tn);
 // pos increment
-knc = tab2.length/tlen;
+let knc = tab2.length/tlen;
 // clear the breakpoint list
 bkpts = [];
 // write array to breakpoint list
-for(i=0,k=0; i < tlen; i++){
+for(let i=0,k=0; i < tlen; i++){
 bkpts.push(i);
 bkpts.push((tab2[k] + 1)*height/2);
 k += knc;
@@ -155,7 +155,7 @@ let bkpts = [];
 let lnd = false;
 function setup() {
 // update button
-but = createButton("start");
+let but = createButton("start");
 but.parent("butts");
 but.mousePressed(updateTable)
 // canvas clear button
@@ -163,7 +163,7 @@ but = createButton("clear");
 but.parent("butts");
 but.mousePressed(clearCanvas)
 // canvas for drawing/display
-cnv = createCanvas(tlen,height);
+let cnv = createCanvas(tlen,height);
 cnv.parent("canvas");
 // function for mouse down
 cnv.mousePressed(startDraw);
@@ -172,7 +172,7 @@ cnv.mouseReleased(stopDraw);
 // function for mouse movement
 cnv.mouseMoved(lineDraw);
 // create keys buttons
-notes = [48,50,51,55,58,60];
+let notes = [48,50,51,55,58,60];
 notes.forEach(addButton);
 }
 ```
@@ -183,7 +183,7 @@ Each one of the keys buttons is created by
 // function to create a key button
 function addButton(b,n) {
 // b is the note number
-but = createButton(b.toString(),b.toString());
+let but = createButton(b.toString(),b.toString());
 but.parent("keys");
 // mouse down
 but.mousePressed(noteon);
@@ -224,8 +224,8 @@ function lineDraw() {
 // if we are in drawing mode
 if(lnd && !created) {
 // take X and Y positions
-x = mouseX;
-y = mouseY;
+let x = mouseX;
+let y = mouseY;
 // if X is beyond the current X pos
 // and less than the table length
 if(x > ixmax && x < tlen) {
@@ -250,11 +250,11 @@ which regularly updates it,
 ```
 function draw() {
 background(220);
-ix = 0;
-iy = height/2;
+let ix = 0;
+let iy = height/2;
 stroke(0);
 // draw a line connecting each breakpoint
-for(i = 0; i < bkpts.length; i+=2) {
+for(let i = 0; i < bkpts.length; i+=2) {
 line(ix,iy,bkpts[i],bkpts[i+1]);
 ix = bkpts[i];
 iy = bkpts[i+1];
