@@ -60,7 +60,7 @@ note = int(mouseX/sqr)+48;
 // map the mouseY position to 0 - 1
 amp = 1 - mouseY/480;
 // create the event command: negative p3 to hold
-s = "i1 0 -1 " + amp + " " + note + " " + amp*cf;
+let s = "i1 0 -1 " + amp + " " + note + " " + amp*cf;
 // send it to the Csound engine
 if(csound) await csound.inputMessage(s)
 }
@@ -78,12 +78,13 @@ async function slur() {
 // only slur if note is playing
 if(amp > 0) {
 // get the note from mouse X
-nnote = int(mouseX/sqr)+48;
+let nnote = int(mouseX/sqr)+48;
 // slur if it is a new note
 if(note != nnote) await noteon();
 }
 }
 
+let cnv = null;
 // called by P5.js
 function setup() {
 // create canvas object
@@ -99,8 +100,8 @@ background(bgc);
 // if a note is playing
 if(amp > 0){
 // mouse coordinates for note
-nx = (note-48)*sqr;
-ny = (1-amp)*480;
+let nx = (note-48)*sqr;
+let ny = (1-amp)*480;
 // draw a square
 square(nx,ny,sqr);
 // write the note number
