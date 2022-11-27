@@ -84,7 +84,7 @@ to a mouse down action on a button, start a held note in Csound,
 // mouse down function
 async function noteon(note,id) {
 // create the event command: negative p3 to hold
-s = "i1." + note + " 0 -1 0.2 " + note;
+let s = "i1." + note + " 0 -1 0.2 " + note;
 // display it in the JS console
 console.log(s);
 // send it to the Csound engine
@@ -108,7 +108,7 @@ negative p1, which is done by a function responding to mouse up,
 // mouse up function
 async function noteoff(note,id) {
 // create the event command: negative p1 to release
-s = "i-1." + note + " 0 1 0.2 " + note;
+let s = "i-1." + note + " 0 1 0.2 " + note;
 // display it in the JS console
 console.log(s);
 // send it to the Csound engine
