@@ -86,10 +86,6 @@ pointers to start with. I would recommend looking at the HTML5 and JS
 tutorials at https://www.w3schools.com/, which provide really good
 introductions to the area.
 
-As far as these tutorials are concerned, you can run these directly in
-your browser by following the link to the site hosted by github,
-https://vlazzarini.github.io/vanilla/.
-
 To start playing and modifying these examples in your computer,
 open a terminal/command-line and clone this repository using git:
 
