@@ -14,9 +14,11 @@ let csound = null;
 // table length
 const tlen = 512;
 // table array
-let table = new Float32Array(tlen);
+const table = new Float32Array(tlen);
 // canvas height
 const height = 256;
+// breakpoint list for drawing/display
+let bkpts = [];
 
 // csound synthesis code
 const code = `
@@ -107,8 +109,7 @@ await csound.setControlChannel('newTable',0);
 }
 }
 
-// breakpoint list for drawing/display
-let bkpts = [];
+
 // line draw flag
 let lnd = false;
 function setup() {
@@ -210,8 +211,6 @@ async function noteon() {
 let note = this.elt.value;
 // create the event command: negative p3 to hold
 let s = "i1." + note + " 0 -1 0.2 " + note;
-// display it in the JS console
-console.log(s);
 // send it to the Csound engine
 if(csound) await csound.inputMessage(s)
 }
@@ -222,8 +221,6 @@ async function noteoff() {
 let note = this.elt.value;
 // create the event command: negative p1 to release
 let s = "i-1." + note + " 0 1 0.2 " + note;
-// display it in the JS console
-console.log(s);
 // send it to the Csound engine
 if(csound) await csound.inputMessage(s);
 }
@@ -236,5 +233,5 @@ if(csound) await csound.inputMessage(s);
 <p><div id="keys"> </div></p>
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sun Nov 27 11:59:55 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Mon Nov 28 08:14:50 GMT 2022 <!-- hhmts end -->
 </body> </html>

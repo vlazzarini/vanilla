@@ -72,7 +72,7 @@ async function finish() {
 // stop Csound and close output file
 await csound.cleanup();
 // copy output file and get a URL
-fwav = await copyUrlFromLocal(filename, 'audio/ogg');
+sf = await copyUrlFromLocal(filename, 'audio/ogg');
 // notify the console
 handleMessage("Complete: " + filename + " ready");
 // enable the download button
@@ -109,7 +109,7 @@ let a = document.createElement('a');
 // append it to html body
 document.body.appendChild(a);
 // set the anchor URL
-a.href = fwav;
+a.href = sf;
 // open in a different tab
 a.target = "_blank";
 // click on the element
@@ -126,7 +126,7 @@ let a = document.createElement('a');
 // append it to html body
 document.body.appendChild(a);
 // set the anchor URL
-a.href = fwav;
+a.href = sf;
 // set the download name
 a.download = filename;
 // click on the element

@@ -71,26 +71,25 @@ document.getElementById("start button").style.color = "red";
 isOn = !isOn;
 }
 
+let bsize = 512;
 let scopeNode = null;
 let ctx = null;
-let s = null;
+let sig = new Float32Array(bsize);
 async function createScope() {
 // create AudioAnalyser node
 scopeNode = actx.createAnalyser();
-// set the buffer size to 512
-scopeNode.fftSize = 512;
+// set buffer size
+scopeNode.fftSize = bsize;
 // get 2d context from HTML canvas
 ctx = document.getElementById('scope').getContext('2d');
 // set the canvas width to match buffer size
 ctx.canvas.width = scopeNode.fftSize;
-// create the data buffer to hold signal
-s = new Float32Array(scopeNode.fftSize);
 // get the Csound node
 let node = await csound.getNode();
 // connect it to the scope node
 node.connect(scopeNode);
 // call scope drawing
-scopeDraw(0)
+scopeDraw(0);
 }
 
 // this holds previous time stamp
@@ -102,21 +101,21 @@ function scopeDraw(now) {
 // if the period has elapsed
 if(now - before > period) {
 // get the audio from the node
-scopeNode.getFloatTimeDomainData(s);
+scopeNode.getFloatTimeDomainData(sig);
 // clear the canvas
 ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 // start drawing
 ctx.beginPath();
 // create lines between samples
-for (let t = 0; t < s.length; t++)
- ctx.lineTo(t,ctx.canvas.height*(0.5 - s[t]*0.5));
+for (let t = 0; t < sig.length; t++)
+ ctx.lineTo(t,ctx.canvas.height*(0.5 - sig[t]*0.5));
 // draw the plot
 ctx.stroke();
 // update time stamp
 before = now;
 }
 // call the animation frame to draw again.
-requestAnimationFrame(scopeDraw)
+requestAnimationFrame(scopeDraw);
 }
 
 </script>
@@ -132,5 +131,5 @@ requestAnimationFrame(scopeDraw)
 
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sun Nov 27 11:58:41 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Mon Nov 28 08:23:35 GMT 2022 <!-- hhmts end -->
 </body> </html>

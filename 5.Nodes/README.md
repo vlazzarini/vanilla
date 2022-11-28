@@ -138,23 +138,25 @@ the animation, we just call this function at the end,
  
 
 ```
+let bsize = 512;
+let scopeNode = null;
+let ctx = null;
+let sig = new Float32Array(bsize);
 async function createScope() {
 // create AudioAnalyser node
 scopeNode = actx.createAnalyser();
-// set the buffer size to 512
-scopeNode.fftSize = 512;
+// set buffer size
+scopeNode.fftSize = bsize;
 // get 2d context from HTML canvas
 ctx = document.getElementById('scope').getContext('2d');
 // set the canvas width to match buffer size
 ctx.canvas.width = scopeNode.fftSize;
-// create the data buffer to hold signal
-s = new Float32Array(scopeNode.fftSize);
 // get the Csound node
-node = await csound.getNode();
+let node = await csound.getNode();
 // connect it to the scope node
 node.connect(scopeNode);
 // call scope drawing
-scopeDraw(0)
+scopeDraw(0);
 }
 ```
 
@@ -195,7 +197,7 @@ ctx.stroke();
 before = now;
 }
 // call the animation frame to draw again.
-requestAnimationFrame(scopeDraw)
+requestAnimationFrame(scopeDraw);
 }
 ```
 
