@@ -12,11 +12,11 @@ const csoundjs = "../js/csound.js";
 // csound is the Csound engine object (null as we start)
 let csound = null;
 // table length
-let tlen = 512;
+const tlen = 512;
 // table array
 let table = new Float32Array(tlen);
 // canvas height
-let height = 256;
+const height = 256;
 
 // csound synthesis code
 const code = `
@@ -75,7 +75,7 @@ let x2 = bkpts[k+2];
 let inc = (y2-y1)/(x2-x1);
 let a = y1;
 // linear interpolation
-for(i=x1; i < x2; i++)  {
+for(let i=x1; i < x2; i++)  {
 table[i] = a/height - 0.5;
 a += inc;
 }     
