@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Tonnetz</title>
+</head>
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js">
+</script>
+
+<script type="text/javascript"> 
+// csound.js is the Csound WASM module
+const csoundjs = "../js/csound.js";
+// csound is the Csound engine object (null as we start)
+let csound = null;
+// CSD file name
+const csd = './gm.csd';
+const sfont = './gm.sf2';
+// this is the JS function to start Csound
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(csoundjs);
+// create a Csound engine object
+csound = await Csound();
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+await csound.setOption("-M0");
+// copy the CSD file to the Csound local filesystem
+await copyUrlToLocal(sfont,sfont)
+// copy the CSD file to the Csound local filesystem
+await copyUrlToLocal(csd,csd)
+// compile csound code
+await csound.compileCsd(csd);
+// start the engine
+await csound.start();
+// change text to ON
+document.getElementById("start button").value = "ON";
+// change colour to RED
+document.getElementById("start button").style.color = "red";
+}
+}
+
+async function copyUrlToLocal(src, dest) {
+// fetch the file
+let srcfile = await fetch(src, {cache: "no-store"})
+// get the file data as an array
+let dat = await srcfile.arrayBuffer();
+// write the data as a new file in the filesystem
+await csound.fs.writeFile(dest, new Uint8Array(dat));
+}
+
+let names = ["C", "C#", "D", "Eb", "E", "F","F#", "G", "G#", "A", "Bb", "B"];
+
+class Note {
+   constructor(x, y, n) {
+     // top left-hand coordinates
+     this.x = x;
+     this.y = y;
+     this.note = n;
+     this.on = false;
+   }
+   create() {
+     if(this.on) fill(220);
+     else fill(255);
+     square(this.x, this.y, sqr); 
+     fill(0);
+     text(names[this.note%12], this.x+xoff, this.y+yoff)
+   }
+}
+
+let yoff = 15;
+let xoff = 5;
+let sqr = 25;
+let width = 12*sqr;
+let height = 24*sqr;
+let nn = []; 
+let lastNote = null;
+function grid() {
+  let ys = 12;
+  let xs = 0;
+  for(let y=0; y < height; y+=sqr) {
+   let num = ys;
+   for(let x=xs; x < width-xs; x+=sqr) {
+    if(num > 96) num -= 84;
+    let n = new Note(x,y,num);
+    nn.push(n);
+    num += 7;
+  }
+  if(xs == 0) {
+    xs = sqr/2;
+    ys += 3; 
+  } else {
+    xs = 0;
+    ys -= 4;
+  }  
+  }
+}
+
+async function noteOn() {
+  let x = mouseX;
+  let y = mouseY;
+  for(let i=0; i < nn.length; i++) {
+    nn[i].on = false;
+    if((x >= nn[i].x && y >= nn[i].y) &&
+       (x < nn[i].x+sqr && y < nn[i+1].y+sqr)) {
+       nn[i].on = true;
+       lastNote = nn[i];
+       if(csound) await csound.midiMessage(144,lastNote.note,60)
+       return;
+    } 
+  }
+}
+
+async function noteOff() {
+  if(lastNote !=  null) {
+      if(csound) await csound.midiMessage(128,lastNote.note,0);
+      lastNote.on = false;
+      lastNote = null;
+  }
+}
+
+
+function setup() {
+  let cnv = createCanvas(width,height);
+  grid();
+  cnv.mousePressed(noteOn); 
+  cnv.mouseReleased(noteOff); 
+}
+
+function draw() {
+  background(220);
+  for(let i=0; i < nn.length; i++) {
+    nn[i].create();
+  }
+}
+
+async function pgmChange() {
+ pgm = document.getElementById("pgm").value;
+ if(csound) await csound.midiMessage(192,pgm,0);
+}
+</script>
+<body>
+<h1>Tonnetz</h1>
+<main> </main>
+<p>
+<input type="button" id="start button" onclick="start()" value="OFF">
+</input>
+  <select name="prog" id="pgm">
+    <option value="0">Grand Piano</option>
+    <option value="4">Electric Piano</option> 
+    <option value="16">Drawbar Organ</option>
+    <option value="19">Church Organ</option>      
+    <option value="24">Acoustic Guitar</option>
+    <option value="26">Electric Guitar</option>
+    <option value="33">Electric Bass</option>  
+    <option value="35">Fretless Bass</option>
+    <option value="40">Violin</option>
+    <option value="42">Cello</option>
+    <option value="48">String Ensemble</option>
+    <option value="68">Oboe</option>  
+    <option value="73">Flute</option>
+    <option value="80">Synth Lead</option>
+    <option value="88">Synth Pad</option>    
+  </select>
+  <input type="button" value="load preset" onclick="pgmChange()">
+</form>
+</p>
+
+
+  <hr>
+<p><a href="./readme.html">README</a></p>
+<!-- hhmts start -->Last modified: Thu Dec  1 22:04:53 GMT 2022 <!-- hhmts end -->
+</body> </html>
