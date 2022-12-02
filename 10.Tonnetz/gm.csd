@@ -5,7 +5,7 @@
 <CsInstruments>
 nchnls=2
 ksmps = 64
-           
+            
 
 ichn = 1
 lp1: massign   ichn, 0
@@ -61,7 +61,8 @@ nxt:
         else
          krel = 0.5
         endif
-        event "i", kinst, 0, -1, kd1, kd2, kpg, kch,krel  
+        event "i", kinst, 0, -1, kd1, kd2, kpg, kch,krel
+        chnset kd1, "notenum"
      
     elseif (kst == 128 || (kst == 144 && kd2 == 0)) then ; note off
         kpg table kch, ipg
@@ -85,7 +86,8 @@ nxt:
         else
          kpg = 0
         endif
-        event "i", -kinst, 0, 1 
+        event "i", -kinst, 0, 1
+        chnset k(-1), "notenum"
      
     elseif (kst == 192) then /* program change msgs */
        if kch == 9 then
@@ -128,7 +130,7 @@ kv table p7, 2
 kvol tablei kv, 5 
 kpan  table p7, 3
 kpan = (kpan - 64)/128
-       outs 0.2*a1*kvol*(0.5-kpan/2)*kenv, 0.2*a2*kvol*(0.5+kpan/2)*kenv 
+       outs a1*kvol*(0.5-kpan/2)*kenv, a2*kvol*(0.5+kpan/2)*kenv 
 endin
 
 instr 11

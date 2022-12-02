@@ -153,7 +153,9 @@ the fly and display Csound console messages.
   provides realtime performance controls for the instrument.  
 9.[WTab](9.WTab/.): this demonstrates the use of
   function tables and how to transfer data in and out of Csound and an
-  interactive graphical user interface provided by p5.js.
+  interactive graphical user interface provided by p5.js.  
+10.[Tonnetz](10.Tonnetz/.): this example introduces MIDI control,
+  with interactive graphics also provided by p5.js,
 
 These tutorials can be accessed and forked from
 [github](https://github.com/vlazzarini/vanilla/).
