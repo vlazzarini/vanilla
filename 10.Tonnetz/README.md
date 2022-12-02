@@ -21,7 +21,7 @@ JS Script
 For this example, we provide the Csound code as a CSD file.
 This depends on a data file containg audio samples (as
 soundfonts), which we can provide to the local filesystem
-using the same method introduced in earlier example.
+using the same method introduced in earlier examples.
 
 Since we are using MIDI, we need to pass in the option to use
 MIDI input,
