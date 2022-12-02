@@ -1,8 +1,8 @@
 Tonnetz
 ===
 
-This tutorial builds on the two previous examples to show an example
-of MIDI input and interactive graphics. The idea is to construct a 24
+This tutorial builds on the two previous examples to demonstrate
+MIDI input with interactive graphics. The idea is to construct a 24
 by 24 Tonnetz in a p5.js Canvas object, which can be used to play sounds.
 This time, we will use MIDI to control Csound, which will also allow
 us to plug in a MIDI device and use that to make sound.
