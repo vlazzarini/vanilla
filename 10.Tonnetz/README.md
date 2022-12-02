@@ -23,7 +23,7 @@ This depends on a data file containg audio samples (as
 soundfonts), which we can provide to the local filesystem
 using the same method introduced in earlier examples.
 
-Since we are using MIDI, we need to pass in the option to use
+Since we are planning to use MIDI, we need to pass in the option to turn on
 MIDI input,
 
 ```
