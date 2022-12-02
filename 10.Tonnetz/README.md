@@ -201,6 +201,7 @@ to this (by changing colour).
 
 The p5.js functions can now be defined to create the interface,
 
+```
 // called by p5.js
 function setup() {
 // create Canvas
@@ -218,7 +219,7 @@ function draw() {
 background(220);
 drawTonnetz();
 }
-
+```
 
 Finally, we can provide a means for users to change the preset
 used by Csound. This can be done via a program change message.
