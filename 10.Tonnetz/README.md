@@ -156,6 +156,7 @@ clicks on canvas. The idea here is to check the mouse position against
 the Tonnetz and then issue a MIDI note on message to Csound for the
 corresponding note number,
 
+```
 // last note played
 let lastNote = null;
 // on note on
@@ -174,6 +175,7 @@ return;
 } 
 }
 }
+```
 
 We also keep a record of the last note played so that on mouse
 released (anywhere on Canvas), we can stop it by sending a MIDI note off
