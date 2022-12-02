@@ -137,11 +137,12 @@ let note = await csound.getControlChannel("notenum");
 for(let i=0; i < nn.length; i++) {
 // set the notes to ON if they have the same note number
 if(nn[i].note == note) nn[i].on = true
-else nn[i].on = false;
+// or OFF if they are negative
+else if(nn[i].note == -note) nn[i].on = false;
 }
 }
-// recurse in 10 ms
-setTimeout(controlListen, 10);
+// recurse
+setTimeout(controlListen);
 }
 ```
 
