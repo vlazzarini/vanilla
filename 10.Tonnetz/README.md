@@ -125,7 +125,7 @@ nn[i].create();
 
 In order to provide visual feedback to the user, the Csound
 code uses an output control channel, which sends out the latest MIDI
-on note. We can define a listener to deal with this,
+on/off note. We can define a listener to deal with this,
 
 ```
 // control channel listener
