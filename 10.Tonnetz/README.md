@@ -152,6 +152,14 @@ and prime it with
 setTimeout(controlListen);
 ```
 
+This listener is therefore used to update the Note list.
+However, due to the asynchronous nature of the 
+control messages, it may miss some note messages
+if a number of these are received in quick 
+succession. That is only the case if external 
+MIDI input is used, as the Tonnetz graphical 
+interface is strictly monophonic.
+
 The next thing we need to do is to set a function to respond to mouse
 clicks on canvas. The idea here is to check the mouse position against
 the Tonnetz and then issue a MIDI note on message to Csound for the
