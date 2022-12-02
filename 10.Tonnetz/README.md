@@ -158,12 +158,13 @@ control messages, it may miss some note messages
 if a number of these are received in quick 
 succession. That is only the case if external 
 MIDI input is used, as the Tonnetz graphical 
-interface is strictly monophonic.
+interface input is strictly monophonic, as we will see
+ next.
 
-The next thing we need to do is to set a function to respond to mouse
-clicks on canvas. The idea here is to check the mouse position against
-the Tonnetz and then issue a MIDI note on message to Csound for the
-corresponding note number,
+To enable MIDI control from the interface, we need to do is to set a 
+function to respond to mouse clicks on canvas. The idea here is to check 
+the mouse position against the Tonnetz and then issue a MIDI note on message 
+to Csound for the corresponding note number,
 
 ```
 // last note played
@@ -188,7 +189,7 @@ return;
 
 We also keep a record of the last note played so that on mouse
 released (anywhere on Canvas), we can stop it by sending a MIDI note off
-message to Csound.
+message to Csound. 
 
 ```
 // on note off
@@ -204,9 +205,9 @@ lastNote = null;
 ```
 
 Note that it is Csound that is responsible (via control messages) to
-set the ON/OFF flag for notes. This means that the clicking action
-only triggers a MIDI note, and the interface is updated by the flag
-setting which happens in the control message listener. All notes on
+set the ON/OFF flag for notes. The clicking action
+only triggers one MIDI note at a time, and the interface is updated by 
+the flag setting which happens in the control message listener. All notes on
 the interface that are tied up with a particular note number will react
 to this (by changing colour).
 
