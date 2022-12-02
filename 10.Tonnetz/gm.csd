@@ -87,7 +87,7 @@ nxt:
          kpg = 0
         endif
         event "i", -kinst, 0, 1
-        chnset k(-1), "notenum"
+        chnset -kd1, "notenum"
      
     elseif (kst == 192) then /* program change msgs */
        if kch == 9 then

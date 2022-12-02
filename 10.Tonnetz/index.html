@@ -53,7 +53,8 @@ let note = await csound.getControlChannel("notenum");
 for(let i=0; i < nn.length; i++) {
 // set the notes to ON if they have the same note number
 if(nn[i].note == note) nn[i].on = true
-else nn[i].on = false;
+// or OFF if they are negative
+else if(nn[i].note == -note) nn[i].on = false;
 }
 }
 // recurse in 10 ms
@@ -228,5 +229,5 @@ drawTonnetz();
 <main> </main>
   <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Fri Dec  2 14:00:15 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Fri Dec  2 14:17:49 GMT 2022 <!-- hhmts end -->
 </body> </html>
