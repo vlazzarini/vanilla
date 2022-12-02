@@ -10,7 +10,7 @@ us to plug in a MIDI device and use that to make sound.
 CsoundObj API code used
 -----------
 
-The following  CsoundObj method are used for the first time in this tutorial:
+The following  CsoundObj method is used for the first time in this tutorial:
 
 `.midiMessageInput()`: sends a MIDI channel message to Csound.
 
