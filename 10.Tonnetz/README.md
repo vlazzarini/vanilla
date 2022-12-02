@@ -199,7 +199,7 @@ Note that it is Csound that is responsible (via control messages) to
 set the ON/OFF flag for notes. This means that the clicking action
 only triggers a MIDI note, and the interface is updated by the flag
 setting which happens in the control message listener. All notes on
-the interface that are tied up with a particular note number wil react
+the interface that are tied up with a particular note number will react
 to this (by changing colour).
 
 The p5.js functions can now be defined to create the interface,
