@@ -110,7 +110,7 @@ ys += 3;
 }
 ```
 
-The Tonnetz can now be drawn by iterating through the list
+The Tonnetz can be drawn by iterating through the list
 and calling the relevant method,
 
 ```
