@@ -62,7 +62,7 @@ nxt:
          krel = 0.5
         endif
         event "i", kinst, 0, -1, kd1, kd2, kpg, kch,krel
-        chnset kd1, "notenum"
+        tablew 1,kd1,7
      
     elseif (kst == 128 || (kst == 144 && kd2 == 0)) then ; note off
         kpg table kch, ipg
@@ -87,7 +87,7 @@ nxt:
          kpg = 0
         endif
         event "i", -kinst, 0, 1
-        chnset -kd1, "notenum"
+        tablew 0,kd1,7
      
     elseif (kst == 192) then /* program change msgs */
        if kch == 9 then
@@ -147,6 +147,7 @@ f2 0 16 -2 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127
 f3 0 16 -2 64 64 64 64 64 64 64 64 64 64 64 64 64 64 64 64 
 f5 0 128 5 0.1 128 1   /* velocity mapping: less nuanced */
 f6 0 128 5 0.01  128 1 /* velocity mapping: more nuanced */
+f7 0 128 7 0 128 0  /* note on table */
 i 1 0 z
 e
 </CsScore>

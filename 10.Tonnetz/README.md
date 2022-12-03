@@ -123,47 +123,44 @@ nn[i].create();
 }
 ```
 
-In order to provide visual feedback to the user, the Csound
-code uses an output control channel, which sends out the latest MIDI
-on/off note. We can define a listener to deal with this,
+In order to provide visual feedback to the user, we need to
+retrieve the note on/off status for each Note object in the
+Tonnetz. This is done through two components:
+
+1. In the Csound CSD code, we have a table of size 128
+that holds the on/off status for each note (1 or 0, respectively).  
+2. On the JS side, we define a listening callback on a timeout,
+which regularly checks the values on that table and sets the
+status of each Note,
 
 ```
-// control channel listener
-async function controlListen() {
+// listen for note status
+async function noteListen() {
 if(csound) {
-// get the control channel value 
-let note = await csound.getControlChannel("notenum");
+// get the table with note status
+let noteTab = await csound.tableCopyOut(7);
 // loop through the notes
 for(let i=0; i < nn.length; i++) {
-// set the notes to ON if they have the same note number
-if(nn[i].note == note) nn[i].on = true
-// or OFF if they are negative
-else if(nn[i].note == -note) nn[i].on = false;
+// loop through table
+for(let k=0; k < noteTab.length; k++) {
+// set the status for each Note
+if(k == nn[i].note) nn[i].on = noteTab[k];
 }
 }
 // recurse
-setTimeout(controlListen);
+setTimeout(noteListen,10);
+}
 }
 ```
 
 and prime it with
 
 ```
-setTimeout(controlListen);
+setTimeout(noteListen);
 ```
 
-This listener is therefore used to update the Note list.
-However, due to the asynchronous nature of the 
-control messages, it may miss some note messages
-if a number of these are received in quick 
-succession. That is only the case if external 
-MIDI input is used, as the Tonnetz graphical 
-interface input is strictly monophonic, as we will see
- next.
-
-To enable MIDI control from the interface, we need to do is to set a 
-function to respond to mouse clicks on canvas. The idea here is to check 
-the mouse position against the Tonnetz and then issue a MIDI note on message 
+To enable MIDI control from the interface, all we need to do is to set a 
+couple of functions to respond to mouse clicks on canvas. The idea here is to check the mouse position against the Tonnetz and then issue a MIDI note on message 
 to Csound for the corresponding note number,
 
 ```
@@ -204,12 +201,13 @@ lastNote = null;
 }
 ```
 
-Note that it is Csound that is responsible (via control messages) to
+Note that it is Csound that is responsible (via a function table) to
 set the ON/OFF flag for notes. The clicking action
 only triggers one MIDI note at a time, and the interface is updated by 
 the flag setting which happens in the control message listener. All notes on
 the interface that are tied up with a particular note number will react
-to this (by changing colour).
+to this (by changing colour). If an external MIDI device is used,
+however, more than one note can be played concurrently.
 
 The p5.js functions can now be defined to create the interface,
 

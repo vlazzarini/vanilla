@@ -39,26 +39,27 @@ await csound.start();
 document.getElementById("start button").value = "ON";
 // change colour to RED
 document.getElementById("start button").style.color = "red";
-// start control channel listener
-setTimeout(controlListen)
+// start listener
+setTimeout(noteListen);
 }
 }
 
-// control channel listener
-async function controlListen() {
+// listen for note status
+async function noteListen() {
 if(csound) {
-// get the control channel value 
-let note = await csound.getControlChannel("notenum");
+// get the table with note status
+let noteTab = await csound.tableCopyOut(7);
 // loop through the notes
 for(let i=0; i < nn.length; i++) {
-// set the notes to ON if they have the same note number
-if(nn[i].note == note) nn[i].on = true
-// or OFF if they are negative
-else if(nn[i].note == -note) nn[i].on = false;
+// loop through table
+for(let k=0; k < noteTab.length; k++) {
+// set the status for each Note
+if(k == nn[i].note) nn[i].on = noteTab[k];
 }
 }
 // recurse
-setTimeout(controlListen);
+setTimeout(noteListen,10);
+}
 }
 
 // when a new preset is requested
@@ -229,5 +230,5 @@ drawTonnetz();
 <main> </main>
   <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Fri Dec  2 16:21:00 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Dec  3 11:37:18 GMT 2022 <!-- hhmts end -->
 </body> </html>
