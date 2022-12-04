@@ -75,10 +75,11 @@ text(names[this.note%12], this.x+xoff, this.y+yoff)
 }
 ```
 
-Each note is therefore represented as square with a text inside,
+Each note is therefore represented as a diamond with a text inside,
 which will be shown with different background colours depending
-on whether the note is on or off. We can now create a list of Note
-objects with the correct locations and note numbers, which
+on whether the note is on or off. The x and y coordinates for the
+note define the left-hand vertex of the diamond. We can now create a
+list of Note objects with the correct locations and note numbers, which
 defines the Tonnetz.
 
 ```
@@ -165,8 +166,9 @@ setTimeout(noteListen);
 ```
 
 To enable MIDI control from the interface, all we need to do is to set a 
-couple of functions to respond to mouse clicks on canvas. The idea here is to check the mouse position against the Tonnetz and then issue a MIDI note on message 
-to Csound for the corresponding note number,
+couple of functions to respond to mouse clicks on canvas. The idea
+here is to check the mouse position against the Tonnetz. If this falls
+within a square enclosed by the diamond, the code then issues a MIDI note on message to Csound with the corresponding note number,
 
 ```
 // last note played
