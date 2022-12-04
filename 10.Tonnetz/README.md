@@ -80,7 +80,7 @@ which will be shown with different background colours depending
 on whether the note is on or off. The x and y coordinates for the
 note define the left-hand vertex of the diamond. We can now create a
 list of Note objects with the correct locations and note numbers, which
-defines the Tonnetz.
+defines the Tonnetz. 
 
 ```
 // canvas dimensions
@@ -115,6 +115,11 @@ ys += 3;
 }
 }
 ```
+
+In the horizontal dimension, notes are incremented by 7 semitones
+(a perfect fifth). In the left-right rising diagonal, notes are incremented by
+4 semitones. With this arrangement, the vertical dimension pitches
+change by a semitone, and the ones in the left-right falling diagonal by 3 semitones.
 
 The Tonnetz can be drawn by iterating through the list
 and calling the relevant method,
