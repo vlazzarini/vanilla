@@ -2,8 +2,8 @@ Tonnetz
 ===
 
 This tutorial builds on the two previous examples to demonstrate
-MIDI input with interactive graphics. The idea is to construct a 24
-by 24 Tonnetz in a p5.js Canvas object, which can be used to play sounds.
+MIDI input with interactive graphics. The idea is to construct a 12
+by 12 Tonnetz in a p5.js Canvas object, which can be used to play sounds.
 This time, we will use MIDI to control Csound, which will also allow
 us to plug in a MIDI device and use that to make sound.
 
@@ -40,10 +40,12 @@ drawing the note on Canvas,
 // pitch class name table
 const names = ["C", "C#", "D", "Eb", "E", "F","F#", "G", "G#", "A", "Bb", "B"];
 // text xy offset for notes
-const yoff = 15;
-const xoff = 5;
-// note square size
+const yoff = 5;
+const xoff = 10;
+// note diamond side size
 const sqr = 25;
+// diamond diagonal
+const diag = sqr*Math.sqrt(2);
 // this defines a note for the Tonnetz
 class Note {
 constructor(x, y, n) {
@@ -60,8 +62,11 @@ create() {
 // set the fill for ON/OFF
 if(this.on) fill(220);
 else fill(255);
-// draw a square
-square(this.x, this.y, sqr);
+// draw a diamond
+quad(this.x, this.y, 
+this.x+diag/2, this.y-diag/2,
+this.x+diag, this.y,
+this.x+diag/2, this.y+diag/2);
 // set the text fill
 fill(0);
 // display note pitch class name
@@ -78,19 +83,19 @@ defines the Tonnetz.
 
 ```
 // canvas dimensions
-let width = 24*sqr;
-let height = 24*sqr;
+const width = 12*diag;
+const height = 12*diag;
 // Note list
 let nn = [];
 // create Tonnetz on canvas
 function createTonnetz() {
 let ys = 24;
-let xs = 0;
+let xs = -diag/2;
 // vertical offset by 3 or -4 semitones, alternating
-for(let y=0; y < height; y+=sqr) {
+for(let y=0; y < height+diag/2; y+=diag/2) {
 let num = ys;
 // horizontal offset by 7 semitones
-for(let x=xs; x < width-xs; x+=sqr) {
+for(let x=xs; x < width; x+=diag) {
 // note numbers between 0 and 108
 if(num > 108) num -= 108;
 if(num < 0) num += 108;
@@ -100,7 +105,7 @@ num += 7;
 }
 // vertical offset, every other row
 if(xs == 0) {
-xs = -sqr/2;
+xs = -diag/2;
 ys -= 4; 
 } else {
 xs = 0;
@@ -168,12 +173,13 @@ to Csound for the corresponding note number,
 let lastNote = null;
 // on note on
 async function noteOn() {
-let x = mouseX;
-let y = mouseY;
+const x = mouseX;
+const y = mouseY;
 for(let i=0; i < nn.length; i++) {
 // if x and y are inside a canvas note
-if((x >= nn[i].x && y >= nn[i].y) &&
-(x < nn[i].x+sqr && y < nn[i].y+sqr)) {
+const mm = diag/4;
+if((x > nn[i].x+mm && x < nn[i].x+3*mm) &&
+(y > nn[i].y-mm && y < nn[i].y+mm))  {
 // set the lastNote to this
 lastNote = nn[i];
 // send a note on message to Csound
