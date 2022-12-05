@@ -85,9 +85,9 @@ const names = ["C", "C#", "D", "Eb", "E", "F","F#", "G", "G#", "A", "Bb", "B"];
 const yoff = 5;
 const xoff = 10;
 // note diamond side size
-const sqr = 25;
+const side = 25;
 // diamond diagonal
-const diag = sqr*Math.sqrt(2);
+const diag = side*Math.sqrt(2);
 // this defines a note for the Tonnetz
 class Note {
 constructor(x, y, n) {
@@ -165,9 +165,12 @@ const x = mouseX;
 const y = mouseY;
 for(let i=0; i < nn.length; i++) {
 // if x and y are inside a canvas note
-const mm = diag/4;
-if((x > nn[i].x+mm && x < nn[i].x+3*mm) &&
-(y > nn[i].y-mm && y < nn[i].y+mm))  {
+const diff1 = x - nn[i].x;
+const diff2 = nn[i].x + diag - x;
+if((x >= nn[i].x && x < nn[i].x + diag/2 &&
+y >= nn[i].y  - diff1 && y < nn[i].y + diff1) ||
+(x >= nn[i].x + diag/2 && x < nn[i].x + diag &&
+y >= nn[i].y  - diff2 && y < nn[i].y + diff2)){
 // set the lastNote to this
 lastNote = nn[i];
 // send a note on message to Csound
@@ -236,5 +239,5 @@ drawTonnetz();
 <main> </main>
   <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sun Dec  4 20:53:37 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Mon Dec  5 08:43:09 GMT 2022 <!-- hhmts end -->
 </body> </html>

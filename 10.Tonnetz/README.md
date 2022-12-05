@@ -171,9 +171,10 @@ setTimeout(noteListen);
 ```
 
 To enable MIDI control from the interface, all we need to do is to set a 
-couple of functions to respond to mouse clicks on canvas. The idea
-here is to check the mouse position against the Tonnetz. If this falls
-within a square enclosed by the diamond, the code then issues a MIDI note on message to Csound with the corresponding note number,
+couple of functions to respond to mouse clicks on canvas. For note on,
+we need to check the mouse coordinates and see which diamond they
+belong to. The code then issues a MIDI message to Csound with the
+corresponding note number,
 
 ```
 // last note played
@@ -184,9 +185,12 @@ const x = mouseX;
 const y = mouseY;
 for(let i=0; i < nn.length; i++) {
 // if x and y are inside a canvas note
-const mm = diag/4;
-if((x > nn[i].x+mm && x < nn[i].x+3*mm) &&
-(y > nn[i].y-mm && y < nn[i].y+mm))  {
+const diff1 = x - nn[i].x;
+const diff2 = nn[i].x + diag - x;
+if((x >= nn[i].x && x < nn[i].x + diag/2 &&
+y >= nn[i].y  - diff1 && y < nn[i].y + diff1) ||
+(x >= nn[i].x + diag/2 && x < nn[i].x + diag &&
+y >= nn[i].y  - diff2 && y < nn[i].y + diff2))
 // set the lastNote to this
 lastNote = nn[i];
 // send a note on message to Csound
