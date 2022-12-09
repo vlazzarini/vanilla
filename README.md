@@ -155,7 +155,9 @@ the fly and display Csound console messages.
   function tables and how to transfer data in and out of Csound and an
   interactive graphical user interface provided by p5.js.  
 10.[Tonnetz](10.Tonnetz/.): this example introduces MIDI control,
-  with interactive graphics also provided by p5.js,
+with interactive graphics also provided by p5.js.
+11.[Rubber](11.Rubber/.): in this tutorial, realtime input audio is
+introduced to realise a web app with a p5.js interface.
 
 These tutorials can be accessed and forked from
 [github](https://github.com/vlazzarini/vanilla/).

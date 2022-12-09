@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Rubber</title>
+
+
+<script type="text/javascript">
+// import p5.js
+import("https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js")
+const csoundjs = '../js/csound.js';
+
+let csound = null;
+let code = `
+0dbfs = 1
+chn_k "pitch",3
+chn_k "time",3
+chn_k "amp",3
+
+instr 1
+ifw ftgen 0,0,p4*sr,2,0
+ain inch 1
+aph  phasor sr/(ftlen(ifw))
+tablew ain,aph,ifw,1
+ktime chnget "time"        
+kpitch chnget "pitch"
+kamp  chnget "amp"
+kamp port kamp, 0.1
+asig temposcal ktime,kamp,kpitch,ifw,1
+   out asig
+endin
+schedule(1,0,-1,2) 
+`;
+
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(csoundjs);
+// create a Csound engine object
+csound = await Csound();
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+// set realtime audio (adc) input
+await csound.setOption("-iadc");  
+// compile csound code
+await csound.compileOrc(code);
+// start the engine
+await csound.start();
+}
+}
+
+// canvas dimensions
+const width = 400;
+const height = 400;
+
+// canvas crosshair point
+let mpoint = {
+on: false,
+x: 0,
+y: 0
+};
+
+
+// called by P5.js
+function setup() {
+// canvas created once Promise is fulfilled
+start().then(() => {
+const cnv  = createCanvas(width, height);
+cnv.mousePressed(pressed);
+cnv.mouseReleased(released);
+cnv.mouseMoved(moved);
+});              
+}
+
+// text to display
+let txt = null;
+// on mouse press
+function pressed() {
+mpoint.x = mouseX;
+mpoint.y = mouseY;
+mpoint.on = true;
+// timescale
+const t = (4.0*mpoint.x/width)-2;
+// pitchscale
+const p = -(4.0*mouseY/height)+2;
+// set control channels: time, pitch and then amp
+csound.setControlChannel('time',t).then(() => {
+csound.setControlChannel('pitch',p).then(
+() =>{ csound.setControlChannel('amp', 1);});}); 
+txt = "timescale: " + t.toFixed(3) +
+"\npitchscale: " + p.toFixed(3);  
+}
+
+// on mouse move
+function moved() {
+// if pressed
+if(mpoint.on){
+mpoint.x = mouseX;
+mpoint.y = mouseY;
+// timescale
+const t = (4.0*mpoint.x/width)-2;
+// pitchscale
+const p = -(4.0*mouseY/height)+2;
+// set control channels: time and then pitch
+csound.setControlChannel('time', t).then(
+() =>{ csound.setControlChannel('pitch', p);});
+txt = "timescale: " + t.toFixed(3) +
+"\npitchscale: " + p.toFixed(3); 
+}
+}
+
+function released() {
+// clear flag
+mpoint.on = false;
+// clear text
+txt = null;
+// set amp to 0
+csound.setControlChannel('amp',0); 
+}
+
+// called by p5.js
+function draw() {
+if(mpoint.on){
+// change background
+background('gold');
+// draw crosshair
+strokeWeight(1);    
+stroke(0);  
+line(0, mpoint.y, width, mpoint.y);
+line(mpoint.x,0,mpoint.x,height);
+// draw text
+let ofx = 5;
+let ofy = 12;
+if(mpoint.x > width - 100) ofx = -100;
+if(mpoint.y > height - 24) ofy = -24;  
+text(txt, mpoint.x+ofx,mpoint.y+ofy);   
+}
+else background(220);
+// draw reference cross
+strokeWeight(5);  
+stroke('green');  
+line(0, height/2, width, height/2);
+line(width/2,0,width/2,height);  
+}
+
+</script>
+</head>
+
+<body>
+<h1>Rubber</h1>
+<main> </main>
+<hr>
+<p><a href="./readme.html">README</a></p>
+<!-- hhmts start -->Last modified: Fri Dec  9 09:42:46 GMT 2022 <!-- hhmts end -->
+</body> </html>
