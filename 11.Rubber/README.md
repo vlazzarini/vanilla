@@ -27,7 +27,7 @@ CsoundObj API code used
 -----------
 
 All CsoundObj API code used in this tutorial has already been
-introduced in the earlier example.
+introduced in earlier examples.
 
 JS Script
 ---
