@@ -150,9 +150,12 @@ the fly and display Csound console messages.
   files.  
 8.[Reso](8.Reso/.): in this example, we
   interface Csound with an external JS API, p5.js, which
-  provides realtime performance controls for the instrument.  
+  provides realtime performance controls for the instrument. Also
+  available as a
+  [sketch](https://editor.p5js.org/vlazzarini/sketches/rDcPlRF3w)
+  for the p5.js editor environment.  
 9.[WTab](9.WTab/.): this demonstrates the use of
-  function tables and how to transfer data in and out of Csound and an
+  function tables and how to transfer data in and out of Csound to/from an
   interactive graphical user interface provided by p5.js.  
 10.[Tonnetz](10.Tonnetz/.): this example introduces MIDI control,
   with interactive graphics also provided by p5.js.  
