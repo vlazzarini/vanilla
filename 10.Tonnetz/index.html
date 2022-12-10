@@ -195,6 +195,9 @@ lastNote = null;
 function setup() {
 // create Canvas
 let cnv = createCanvas(width,height);
+// disable context menu
+cnv.elt.addEventListener("contextmenu",
+(e) => e.preventDefault()); 
 // create Tonnetz
 createTonnetz();
 // if mouse is pressed on Canvas
@@ -239,5 +242,5 @@ drawTonnetz();
 <main> </main>
   <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Mon Dec  5 08:43:09 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Dec 10 13:27:10 GMT 2022 <!-- hhmts end -->
 </body> </html>

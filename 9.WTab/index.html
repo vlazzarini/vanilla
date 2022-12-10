@@ -123,6 +123,9 @@ but.parent("butts");
 but.mousePressed(clearCanvas)
 // canvas for drawing/display
 let cnv = createCanvas(tlen,height);
+// disable context menu
+cnv.elt.addEventListener("contextmenu",
+(e) => e.preventDefault()); 
 cnv.parent("canvas");
 // function for mouse down
 cnv.mousePressed(startDraw);
@@ -233,5 +236,5 @@ if(csound) await csound.inputMessage(s);
 <p><div id="keys"> </div></p>
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Mon Nov 28 08:14:50 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Dec 10 13:30:03 GMT 2022 <!-- hhmts end -->
 </body> </html>

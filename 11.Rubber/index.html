@@ -65,6 +65,8 @@ function setup() {
 // canvas created once Promise is fulfilled
 start().then(() => {
 const cnv  = createCanvas(width, height);
+cnv.elt.addEventListener("contextmenu",
+(e) => e.preventDefault()); 
 cnv.mousePressed(pressed);
 cnv.mouseReleased(released);
 cnv.mouseMoved(moved);
@@ -150,5 +152,5 @@ line(width/2,0,width/2,height);
 <main> </main>
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Fri Dec  9 09:42:46 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Dec 10 13:30:41 GMT 2022 <!-- hhmts end -->
 </body> </html>

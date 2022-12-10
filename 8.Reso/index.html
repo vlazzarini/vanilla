@@ -89,6 +89,9 @@ let cnv = null;
 function setup() {
 // create canvas object
 cnv = createCanvas(480, 480);
+// disable context menu
+cnv.elt.addEventListener("contextmenu",
+(e) => e.preventDefault()); 
 }
 
 // canvas background
@@ -131,5 +134,5 @@ bgc = 128;
 <main> </main>
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sun Nov 27 11:59:40 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Dec 10 13:26:20 GMT 2022 <!-- hhmts end -->
 </body> </html>

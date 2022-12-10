@@ -153,14 +153,23 @@ the fly and display Csound console messages.
   provides realtime performance controls for the instrument. Also
   available as a
   [sketch](https://editor.p5js.org/vlazzarini/sketches/rDcPlRF3w)
-  for the p5.js editor environment.  
+  on the p5.js editor environment.  
 9.[WTab](9.WTab/.): this demonstrates the use of
   function tables and how to transfer data in and out of Csound to/from an
-  interactive graphical user interface provided by p5.js.  
+  interactive graphical user interface provided by p5.js.  Also
+  available as a
+  [sketch](https://editor.p5js.org/vlazzarini/sketches/1gWAWKZkd)
+  on the p5.js editor environment.  
 10.[Tonnetz](10.Tonnetz/.): this example introduces MIDI control,
-  with interactive graphics also provided by p5.js.  
+  with interactive graphics also provided by p5.js. Also
+  available as a
+  [sketch](https://editor.p5js.org/vlazzarini/sketches/vZIDsTYhQ)
+  on the p5.js editor environment.  
 11.[Rubber](11.Rubber/.): in this tutorial, realtime input audio is
-introduced to realise a web app with a p5.js interface.  
+introduced to realise a web app with a p5.js interface.  Also
+  available as a
+  [sketch](https://editor.p5js.org/vlazzarini/sketches/4F4NBQ0Fy)
+  on the p5.js editor environment.  
 
 These tutorials can be accessed and forked from
 [github](https://github.com/vlazzarini/vanilla/).
