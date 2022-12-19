@@ -35,7 +35,7 @@ nxt:
     if (kst == 144 && kd2 != 0) then ; note on
         kpg table kch, ipg 
         /* instrument identifier is 10.[chn][note] */
-        kinst = 10 + kd1/100000 + kch/100  
+        kinst = 10 + kd1/1000000 + kch/1000  
         if kch == 9 then
          /* exclusive identifiers */
          if kpg == idkit+7 then
@@ -66,7 +66,7 @@ nxt:
      
     elseif (kst == 128 || (kst == 144 && kd2 == 0)) then ; note off
         kpg table kch, ipg
-        kinst = 10 +  kd1/100000 + kch/100
+        kinst = 10 +  kd1/1000000 + kch/1000
         if kch == 9 then
          if (kd1 == 29 || kd1 == 30) then ; EXC7
           kinst = 10.97
@@ -142,9 +142,9 @@ endin
 /* program preset (memory) table */
 f1 0 16 -2 0 0 0 0 0 0 0 0 226 0 0 0 0 0 0 0
 /* velocity (memory) table */ 
-f2 0 16 -2 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 
+f2 0 1024 -7 127 1024 127
 /* pan (memory) table */
-f3 0 16 -2 64 64 64 64 64 64 64 64 64 64 64 64 64 64 64 64 
+f3 0 1024 -7 64 1024 127
 f5 0 128 5 0.1 128 1   /* velocity mapping: less nuanced */
 f6 0 128 5 0.01  128 1 /* velocity mapping: more nuanced */
 f7 0 128 7 0 128 0  /* note on table */
@@ -152,3 +152,20 @@ i 1 0 z
 e
 </CsScore>
 </CsoundSynthesizer> 
+<bsbPanel>
+ <label>Widgets</label>
+ <objectName/>
+ <x>100</x>
+ <y>100</y>
+ <width>320</width>
+ <height>240</height>
+ <visible>true</visible>
+ <uuid/>
+ <bgcolor mode="nobackground">
+  <r>255</r>
+  <g>255</g>
+  <b>255</b>
+ </bgcolor>
+</bsbPanel>
+<bsbPresets>
+</bsbPresets>
