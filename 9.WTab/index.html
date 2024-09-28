@@ -1,4 +1,4 @@
-\<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html> <head>
 <title>WTab</title>
 </head>
@@ -11,8 +11,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js">
 let csound = null;
 // table length
 const tlen = 512;
-// table array
-const table = new Float32Array(tlen);
+
 // canvas height
 const height = 256;
 // breakpoint list for drawing/display
@@ -60,6 +59,8 @@ this.html("update");
 await createTable();
 }
 
+// table array
+const table = new Float32Array(tlen);
 // created/updated flag
 let created = false;
 // create/update table 
@@ -76,10 +77,11 @@ let inc = (y2-y1)/(x2-x1);
 let a = y1;
 // linear interpolation
 for(let i=x1; i < x2; i++)  {
-table[i] = a/height - 0.5;
-a += inc;
+ table[int(i)] = a/height - 0.5;
+ a += inc;
 }     
 }
+
 // copy the array into table 1
 await csound.tableCopyIn(1,table);
 // run instr 2 to generate table 2
@@ -234,5 +236,5 @@ if(csound) await csound.inputMessage(s);
 <p><div id="keys"> </div></p>
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sat Sep 28 18:25:36 IST 2024 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Sep 28 22:06:03 IST 2024 <!-- hhmts end -->
 </body> </html>

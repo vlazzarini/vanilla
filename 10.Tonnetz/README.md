@@ -7,6 +7,11 @@ by 12 Tonnetz in a p5.js Canvas object, which can be used to play sounds.
 This time, we will use MIDI to control Csound, which will also allow
 us to plug in a MIDI device and use that to make sound.
 
+NB: because this code uses `fetch()` to access soundfont files, it requires the
+files to be served from the same server as the HTML page. Therefore
+in order for it to run, it should be open using the `http` protocol
+from a server (either local or remote).
+
 CsoundObj API code used
 -----------
 

@@ -8,6 +8,11 @@ opening or downloading. In general, rendering a complete performance
 is faster than realtime, therefore this is a useful functionality
 provided by Csound.
 
+NB: because this code uses `fetch()` to access files, it requires the
+files to be served from the same server as the HTML page. Therefore
+in order for it to run, it should be open using the `http` protocol
+from a server (either local or remote).
+
 
 CsoundObj API code used
 -----------

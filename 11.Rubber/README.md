@@ -3,25 +3,28 @@ Rubber
 
 This example demonstrates realtime audio input processing. This is
 normally sourced from the default audio input in the system, which may
-be the microphone or a soundcard input. At the first time the page is
-loaded, permission will be sought by the browser to record audio (or
+be the microphone or a soundcard input. At the first time the code is
+run, permission will be sought by the browser to record audio (or
 use the microphone). Once that is granted, Csound can then start
 realtime audio input.
 
 This code also uses P5.js to provide a user interface, similarly
 to earlier examples. We will introduce a few differences such as
-loading Csound from the `setup()` function. This hopefully will
-work everywhere given that permission to use the microphone needs
-to be granted (fulfilling the need for a user action to start
-audio). However if there are problems to get the audio context
-started, some form of user action on the page may be required
-to start Csound. We will also introduce the `.then()` method
-associated with JS Promises and asynchronous processing.
+loading Csound from a user action defined in the `setup()` function.
+This hopefully will work everywhere given that permission to use the
+microphone needs to be granted. Since this may not be enough
+to fullfill the requirement of a user action to get the audio context
+started, we will use a mouse press on the canvas to do that.
+
+We will also introduce the `.then()` method
+associated with JS Promises and asynchronous
+processing.
 
 This web app takes audio from an input, stores it in a 2-second
 buffer (continuously overwriting it), and allows the time and
 pitchscale of that waveform to be manipulated in a two dimensional
 space.
+
 
 CsoundObj API code used
 -----------
@@ -40,9 +43,28 @@ inside our script instead of using a separate html script tag,
 import("https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js")
 ```
 
-Secondly, we can start Csound from the p5.js `setup()` callback. If
-we do not define it as asynchronous, we can use a different code
-pattern to call `start()` (which is defined as `async`) and still
+Secondly, we can start Csound from a user action defined in the p5.js
+`setup()` callback.
+
+
+```
+// called by P5.js
+let cnv = null;
+function setup() {
+ cnv  = createCanvas(width, height);
+ cnv.elt.addEventListener("contextmenu",
+   (e) => e.preventDefault());
+ // first press starts Csound
+ cnv.mousePressed(pressToStart);
+}
+```
+
+So the Canvas object is created with a single mouse-press
+associated callback. Csound has not yet been started, but
+it will be after a user action.
+
+If we do not define the `pressToStart()` function as asynchronous,
+we can use a different code pattern to call `start()` (which is defined as `async`) and still
 impose an order in the sequencing of calls. This is done via
 `.then()`, which is invoked on a Promise that is returned by
 `start()`. This contains a callback that will execute once the
@@ -50,23 +72,18 @@ Promise is fulfilled. We can define this callback using an anonymous
 arrow function, `() => { }`,
 
 ```
-// called by P5.js
-function setup() {
-// canvas created once Promise is fulfilled
-start().then(() => {
-const cnv  = createCanvas(width, height);
-cnv.mousePressed(pressed);
-cnv.mouseReleased(released);
-cnv.mouseMoved(moved);
-});              
+function pressToStart() {
+ start().then(() => {
+ // now define the button callbacks
+ cnv.mousePressed(pressed);
+ cnv.mouseReleased(released);
+ cnv.mouseMoved(moved);
+ });
 }
 ```
 
-So the Canvas object is only created (with its associated callbacks
-for mouse actions on it) once Csound has been started. The `start()`
-function is very similar to the ones in previous examples, except that
-we want to start realtime audio input. This is done by setting an
-option,
+The `start()` function is very similar to the ones in previous examples, except that
+we want to start realtime audio input. This is done by setting an option,
 
 ```
 // set realtime audio (adc) input

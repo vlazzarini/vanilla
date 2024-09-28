@@ -25,6 +25,12 @@ playback with simple function calls responding to play, pause, and
 rewind buttons. These ideas can be applied to create interactive
 performances of complete pieces, such as Stria.
 
+NB: because this code uses `fetch()` to access files, it requires the
+files to be served from the same server as the HTML page. Therefore
+in order for it to run, it should be open using the `http:` protocol
+from a server (either local or remote). Unlike the earlier examples,
+it will not work when opening the page locally using the `file:` protocol.
+
 CsoundObj API code used
 -----------
 

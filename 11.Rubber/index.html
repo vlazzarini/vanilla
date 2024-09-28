@@ -58,24 +58,29 @@ x: 0,
 y: 0
 };
 
-
 // called by P5.js
+let cnv = null;
 function setup() {
-// canvas created once Promise is fulfilled
-start().then(() => {
-const cnv  = createCanvas(width, height);
-cnv.elt.addEventListener("contextmenu",
-(e) => e.preventDefault()); 
-cnv.mousePressed(pressed);
-cnv.mouseReleased(released);
-cnv.mouseMoved(moved);
-});              
+ cnv  = createCanvas(width, height);
+ cnv.elt.addEventListener("contextmenu",
+   (e) => e.preventDefault());
+ // first press starts Csound
+ cnv.mousePressed(pressToStart);
+}
+
+function pressToStart() {
+ start().then(() => {
+ // now define the button callbacks
+ cnv.mousePressed(pressed);
+ cnv.mouseReleased(released);
+ cnv.mouseMoved(moved);
+ });
 }
 
 // text to display
 let txt = null;
 // on mouse press
-function pressed() {
+async function pressed() {
 mpoint.x = mouseX;
 mpoint.y = mouseY;
 mpoint.on = true;
@@ -151,5 +156,5 @@ line(width/2,0,width/2,height);
 <main> </main>
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sat Sep 28 18:26:48 IST 2024 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Sep 28 20:36:30 IST 2024 <!-- hhmts end -->
 </body> </html>
