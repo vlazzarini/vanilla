@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+\<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html> <head>
 <title>WTab</title>
 </head>
@@ -7,8 +7,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js">
 </script>
 
 <script type="text/javascript"> 
-// csound.js is the Csound WASM module
-const csoundjs = "../js/csound.js";
 // csound is the Csound engine object (null as we start)
 let csound = null;
 // table length
@@ -38,7 +36,7 @@ async function start() {
 // if the Csound object is not initialised
 if(csound == null) {
 // import the Csound method from csound.js
-const { Csound } = await import(csoundjs);
+const { Csound } = await import('https://www.unpkg.com/@csound/browser@6.18.7/dist/csound.js');
 // create a Csound engine object
 csound = await Csound();
 // set realtime audio (dac) output  
@@ -236,5 +234,5 @@ if(csound) await csound.inputMessage(s);
 <p><div id="keys"> </div></p>
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sat Dec 10 13:30:03 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Sep 28 18:25:36 IST 2024 <!-- hhmts end -->
 </body> </html>

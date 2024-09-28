@@ -41,11 +41,9 @@ This can be placed anywhere in the HTML file and is run when the page is loaded.
 code we will place a single asynchronous function that will do all the execution of the
 five things listed above. Before this, we have to do a sixth step,
 
-6. Provide global variables to hold the URL for the `csound.js` script (the Csound WASM module), the csound object, and the csound code
+6. Provide global variable to hold the csound object, and the csound code
 
 ```
-// csound.js is the Csound WASM module
-const csoundjs = "../js/csound.js";
 // csound is the Csound engine object (null as we start)
 let csound = null;
 
@@ -57,13 +55,16 @@ endin
 schedule(1,0,1,0.2,A4)
 `;
 ```
-Note that the Csound WASM module is referenced relative to this
-html file location, as it resides in the js directory of the root of this repository. If this
-is moved somewhere else during another deployment, the path to
-its location will need to be updated.
 
-Now we can do all the actions required within a single function called `play()`. The
-comments in the code describe what each line is doing,
+Now we can do all the actions required within a single function called
+`play()`. In this function, before we do anything,
+we have to import the `csound.js` from a URL provided by a content
+delivery network (CDN). This allows us to run Csound
+from any page (with an internet connection) anywhere. It is
+possible, for instance, to open the html file locally in a browser and play
+the example.
+
+The comments in the code describe what each line is doing,
 
 ```
 // this is the JS function to run Csound
@@ -71,7 +72,7 @@ async function play() {
 // if the Csound object is not initialised
 if(csound == null) {
 // import the Csound method from csound.js
-const { Csound } = await import(csoundjs);
+const { Csound } = await import('https://www.unpkg.com/@csound/browser@6.18.7/dist/csound.js');
 // create a Csound engine object
 csound = await Csound();
 // set realtime audio (dac) output  

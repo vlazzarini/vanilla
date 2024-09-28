@@ -4,8 +4,6 @@
 </head>
 
 <script type="text/javascript"> 
-// csound.js is the Csound WASM module
-const csoundjs = "../js/csound.js";
 // csound is the Csound engine object (null as we start)
 let csound = null;
 
@@ -54,7 +52,7 @@ async function start() {
 // if the Csound object is not initialised
 if(csound == null) {
 // import the Csound method from csound.js
-const { Csound } = await import(csoundjs);
+const { Csound } = await import('https://www.unpkg.com/@csound/browser@6.18.7/dist/csound.js');
 // create a Csound engine object
 csound = await Csound();
 // set realtime audio (dac) output  
@@ -102,5 +100,5 @@ isOn = !isOn;
   <textarea cols="80" rows="1" id="mess"></textarea>  
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sun Nov 27 11:42:03 GMT 2022 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Sat Sep 28 18:22:55 IST 2024 <!-- hhmts end -->
 </body> </html>
