@@ -74,6 +74,9 @@ imported from a CDN URL, for example
 https://www.unpkg.com/@csound/browser@6.18.7/dist/csound.js
 ```
 
+The advantage of using this URL is that in this case a page using Csound does not
+need to be loaded from a http server, it can just be opened from a
+file.
 
 For your own projects, you can either use this URL or else you can get Csound
 using the node.js package manager `npm` by installing the
@@ -84,7 +87,11 @@ npm install @csound/browser
 ```
 
 where you will find it in the `dist` directory. Alternatively, this
-file is also found in a [public URL](https://www.jsdelivr.com/package/npm/@csound/browser?path=dist).
+file is also found in a
+[public URL](https://www.jsdelivr.com/package/npm/@csound/browser?path=dist).
+
+If you are providing your own `csound.js`, then you will need to serve
+your page through http or https.
 
 
 Csound WASM API Reference
