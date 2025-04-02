@@ -71,6 +71,12 @@ Csound is implemented in the JS source file `csound.js`, which can be
 imported from a CDN URL, for example
 
 ```
+https://cdn.jsdelivr.net/npm/@csound/browser@6.18.7/dist/csound.js
+```
+
+or
+
+```
 https://www.unpkg.com/@csound/browser@6.18.7/dist/csound.js
 ```
 
