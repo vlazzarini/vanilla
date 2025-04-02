@@ -18,7 +18,7 @@ async function start() {
 // if the Csound object is not initialised
 if(csound == null) {
 // import the Csound method from csound.js
-const { Csound } = await import('https://www.unpkg.com/@csound/browser@6.18.7/dist/csound.js');
+const { Csound } = await import('../js/csound.js');
 // Csound engine object running on a worker thread
 csound = await Csound({useWorker: true});
 // copy the CSD file to the Csound local filesystem
@@ -131,5 +131,5 @@ value="download" disabled>
 <p>
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sat Sep 28 18:24:35 IST 2024 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Wed Apr  2 14:39:42 IST 2025 <!-- hhmts end -->
 </body> </html>

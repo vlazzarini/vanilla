@@ -28,7 +28,7 @@ async function start() {
 // if the Csound object is not initialised
 if(csound == null) {
 // import the Csound method from csound.js
-const { Csound } = await import('https://www.unpkg.com/@csound/browser@6.18.7/dist/csound.js');
+const { Csound } = await import('../js/csound.js');
 // create a Web Audio context for audio processing
 actx = new AudioContext();
 // create a Csound engine object inside the context actx
@@ -129,5 +129,5 @@ requestAnimationFrame(scopeDraw);
 
 <hr>
 <p><a href="./readme.html">README</a></p>
-<!-- hhmts start -->Last modified: Sat Sep 28 18:23:40 IST 2024 <!-- hhmts end -->
+<!-- hhmts start -->Last modified: Wed Apr  2 14:38:33 IST 2025 <!-- hhmts end -->
 </body> </html>
