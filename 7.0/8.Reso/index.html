@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Reso</title>
+</head>
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js">
+</script>
+
+<script type="text/javascript">
+const url =
+"https://cdn.jsdelivr.net/npm/@csound/browser@7.0.0-beta20/dist/csound.js"
+// csound is the Csound engine object (null as we start)
+let csound = null;
+
+// csound synthesis code
+const code = `
+0dbfs=1
+instr 1
+kcps port cpsmidinn(p5),0.025,-1
+tigoto end
+afc = kcps + madsr(0.01,0.5,0.5,0.3)*p6
+aosc = vco2(p4,kcps*.995) + vco2(p4,kcps*1.005)
+asig vclpf aosc*linsegr(0,0.01,1,0,1),afc,0.7
+end:
+out asig*expsegr(0.3,0.01,0.3,0.4,0.001)
+endin
+`;
+
+// this is the JS function to start Csound
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(url);
+// create a Csound engine object
+csound = await Csound();
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+// compile csound code
+await csound.compileOrc(code);
+// start the engine
+await csound.start();
+}
+}
+
+// note amp
+let amp = 0;
+// note number
+let note = 0;
+// filter cutoff
+const cf = 8000
+// square size
+const sqr = 20;
+
+// mouse pressed function
+async function noteon() {
+// quantise the mouseX position to a grid 
+note = int(mouseX/sqr)+48;
+// map the mouseY position to 0 - 1
+amp = 1 - mouseY/480;
+// create the event command: negative p3 to hold
+let s = "i1 0 -1 " + amp + " " + note + " " + amp*cf;
+// send it to the Csound engine
+if(csound) await csound.inputMessage(s)
+}
+
+// mouse released function
+async function noteoff() {
+// send a turnoff message
+if(csound) await csound.inputMessage("i-1 0 1 0 0");
+// set amp to zero
+amp = 0;
+}
+
+// mouse moved function
+async function slur() {
+// only slur if note is playing
+if(amp > 0) {
+// get the note from mouse X
+let nnote = int(mouseX/sqr)+48;
+// slur if it is a new note
+if(note != nnote) await noteon();
+}
+}
+
+let cnv = null;
+// called by P5.js
+function setup() {
+// create canvas object
+cnv = createCanvas(480, 480);
+// disable context menu
+cnv.elt.addEventListener("contextmenu",
+(e) => e.preventDefault()); 
+}
+
+// canvas background
+let bgc = 250;
+// called by P5.js
+function draw() {
+// update the background colour 
+background(bgc);
+// if a note is playing
+if(amp > 0){
+// mouse coordinates for note
+let nx = (note-48)*sqr;
+let ny = (1-amp)*480;
+// draw a square
+square(nx,ny,sqr);
+// write the note number
+text(note,nx+3,ny+15)
+}
+}
+
+// called on mouse click
+async function mousePressed() {
+if(csound == null) {
+// start Csound
+await start();
+// register a mousePressed callback
+cnv.mousePressed(noteon);
+// register a mouseReleased callback
+cnv.mouseReleased(noteoff);
+// register a mouseMoved callback
+cnv.mouseMoved(slur);
+// set canvas background
+bgc = 128;
+}
+}
+
+</script>
+<body>
+<h1>Reso</h1>
+<main> </main>
+<hr>
+<p><a href="./readme.html">README</a></p>
+<!-- hhmts start -->Last modified: Sat Feb  7 22:02:52 GMT 2026 <!-- hhmts end -->
+</body> </html>

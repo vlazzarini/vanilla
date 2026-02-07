@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Tonnetz</title>
+</head>
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js">
+</script>
+
+<script type="text/javascript">
+const url =
+"https://cdn.jsdelivr.net/npm/@csound/browser@7.0.0-beta20/dist/csound.js";
+
+// csound is the Csound engine object (null as we start)
+let csound = null;
+// CSD file name
+const csd = './gm.csd';
+const sfont = './gm.sf2';
+// this is the JS function to start Csound
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(url);
+// create a Csound engine object
+csound = await Csound();
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+// set realtime MIDI input
+await csound.setOption("-M0");
+// copy the sfont file to the Csound local filesystem
+await copyUrlToLocal(sfont,sfont)
+// copy the CSD file to the Csound local filesystem
+await copyUrlToLocal(csd,csd)
+// compile csound code
+await csound.compileCSD(csd,0);
+// start the engine
+await csound.start();
+// change text to ON
+document.getElementById("start button").value = "ON";
+// change colour to RED
+document.getElementById("start button").style.color = "red";
+// start listener
+setTimeout(noteListen);
+}
+}
+
+// listen for note status
+async function noteListen() {
+if(csound) {
+// get the table with note status
+let noteTab = await csound.tableCopyOut(7);
+// loop through the notes
+for(let i=0; i < nn.length; i++) {
+// loop through table
+for(let k=0; k < noteTab.length; k++) {
+// set the status for each Note
+if(k == nn[i].note) nn[i].on = noteTab[k];
+}
+}
+// recurse
+setTimeout(noteListen,10);
+}
+}
+
+// when a new preset is requested
+async function pgmChange() {
+let pgm = document.getElementById("pgm").value;
+// send a program change message to Csound
+if(csound) await csound.midiMessage(192,pgm,0);
+}
+
+// copy URL to local file
+async function copyUrlToLocal(src, dest) {
+// fetch the file
+let srcfile = await fetch(src, {cache: "no-store"})
+// get the file data as an array
+let dat = await srcfile.arrayBuffer();
+// write the data as a new file in the filesystem
+await csound.fs.writeFile(dest, new Uint8Array(dat));
+}
+
+// pitch class name table
+const names = ["C", "C#", "D", "Eb", "E", "F","F#", "G", "G#", "A", "Bb", "B"];
+// text xy offset for notes
+const yoff = 5;
+const xoff = 10;
+// note diamond side size
+const side = 25;
+// diamond diagonal
+const diag = side*Math.sqrt(2);
+// this defines a note for the Tonnetz
+class Note {
+constructor(x, y, n) {
+// top left-hand canvas coordinates
+this.x = x;
+this.y = y;
+// corresponding note number
+this.note = n;
+// ON/OFF switch 
+this.on = false;
+}
+// create the note on canvas
+create() {
+// set the fill for ON/OFF
+if(this.on) fill(220);
+else fill(255);
+// draw a diamond
+quad(this.x, this.y, 
+this.x+diag/2, this.y-diag/2,
+this.x+diag, this.y,
+this.x+diag/2, this.y+diag/2);
+// set the text fill
+fill(0);
+// display note pitch class name
+text(names[this.note%12], this.x+xoff, this.y+yoff)
+}
+}
+
+
+// canvas dimensions
+const width = 12*diag;
+const height = 12*diag;
+// Note list
+let nn = [];
+// create Tonnetz on canvas
+function createTonnetz() {
+let ys = 24;
+let xs = -diag/2;
+// vertical offset by 3 or -4 semitones, alternating
+for(let y=0; y < height+diag/2; y+=diag/2) {
+let num = ys;
+// horizontal offset by 7 semitones
+for(let x=xs; x < width; x+=diag) {
+// note numbers between 0 and 108
+if(num > 108) num -= 108;
+if(num < 0) num += 108;
+let n = new Note(x,y,num);
+nn.push(n);
+num += 7;
+}
+// vertical offset, every other row
+if(xs == 0) {
+xs = -diag/2;
+ys -= 4; 
+} else {
+xs = 0;
+ys += 3;
+}  
+}
+}
+
+// realise the Tonnetz graphically
+function drawTonnetz() {
+// draw notes
+for(let i=0; i < nn.length; i++) {
+nn[i].create();
+}
+}
+
+// last note played
+let lastNote = null;
+// on note on
+async function noteOn() {
+const x = mouseX;
+const y = mouseY;
+for(let i=0; i < nn.length; i++) {
+// if x and y are inside a canvas note
+const diff1 = x - nn[i].x;
+const diff2 = nn[i].x + diag - x;
+if((x >= nn[i].x && x < nn[i].x + diag/2 &&
+y >= nn[i].y  - diff1 && y < nn[i].y + diff1) ||
+(x >= nn[i].x + diag/2 && x < nn[i].x + diag &&
+y >= nn[i].y  - diff2 && y < nn[i].y + diff2)){
+// set the lastNote to this
+lastNote = nn[i];
+// send a note on message to Csound
+if(csound) await csound.midiMessage(144,lastNote.note,100)
+return;
+} 
+}
+}
+
+// on note off
+async function noteOff() {
+// if a note is playing
+if(lastNote) {
+// send a note off to Csound
+if(csound) await csound.midiMessage(128,lastNote.note,0);
+// clear the last note
+lastNote = null;
+}
+}
+
+// called by p5.js
+function setup() {
+// create Canvas
+let cnv = createCanvas(width,height);
+// disable context menu
+cnv.elt.addEventListener("contextmenu",
+(e) => e.preventDefault()); 
+// create Tonnetz
+createTonnetz();
+// if mouse is pressed on Canvas
+cnv.mousePressed(noteOn);
+// if mouse is released on Canvas
+cnv.mouseReleased(noteOff); 
+}
+
+// called  by p5.js
+function draw() {
+background(220);
+drawTonnetz();
+}
+
+
+</script>
+<body>
+<h1>Tonnetz</h1>
+<p>
+<input type="button" id="start button" onclick="start()" value="OFF">
+</input>
+  <select name="prog" id="pgm">
+    <option value="0">Grand Piano</option>
+    <option value="4">Electric Piano</option> 
+    <option value="16">Drawbar Organ</option>
+    <option value="18">Rock Organ</option>      
+    <option value="24">Acoustic Guitar</option>
+    <option value="26">Electric Guitar</option>
+    <option value="33">Electric Bass</option>  
+    <option value="35">Fretless Bass</option>
+    <option value="40">Violin</option>
+    <option value="42">Cello</option>
+    <option value="48">String Ensemble</option>
+    <option value="68">Oboe</option>  
+    <option value="73">Flute</option>
+    <option value="80">Synth Lead</option>
+    <option value="88">Synth Pad</option>    
+  </select>
+  <input type="button" value="load preset"
+  onclick="pgmChange()"></input>
+  </p>
+<main> </main>
+  <hr>
+<p><a href="./readme.html">README</a></p>
+<!-- hhmts start -->Last modified: Sat Feb  7 22:07:14 GMT 2026 <!-- hhmts end -->
+</body> </html>

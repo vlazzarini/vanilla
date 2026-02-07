@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Nodes</title>
+</head>
+
+<script type="text/javascript">
+const url =
+"https://cdn.jsdelivr.net/npm/@csound/browser@7.0.0-beta20/dist/csound.js";
+
+// csound is the Csound engine object (null as we start)
+let csound = null;
+// actx is the Web Audio context object (null as we start)
+let actx = null;
+
+// Csound synthesis code
+let code = `
+instr 1
+a2 resonz rand(0dbfs/2),5800+randh(5000,7),150,2
+out linenr(a2,0.1,0.1,0.01)
+endin
+schedule(1,0,-1);
+`;
+
+
+// instrument on/off state
+let isOn = false;
+
+// this is the JS function to start Csound
+// and toggle audio context on/off
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(url);
+// create a Web Audio context for audio processing
+actx = new AudioContext();
+// create a Csound engine object inside the context actx
+csound = await Csound({audioContext: actx});
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+// compile csound code
+await csound.compileOrc(code);
+// start the engine
+await csound.start();
+// create the scope
+await createScope();
+// change text to ON
+document.getElementById("start button").value = "ON";
+// change colour to RED
+document.getElementById("start button").style.color = "red";
+}
+// if csound engine is running
+else {
+// check if instrument is running
+if(isOn) {
+// suspend the context to stop audio processing
+actx.suspend();
+// change text to OFF
+document.getElementById("start button").value = "OFF";
+// change colour to black
+document.getElementById("start button").style.color = "black";
+} else {
+// resume the context to re-start audio processing
+actx.resume();
+// change text to ON
+document.getElementById("start button").value = "ON";
+// change colour to red
+document.getElementById("start button").style.color = "red";
+}
+}
+// toggle instrument state
+isOn = !isOn;
+}
+
+let bsize = 512;
+let scopeNode = null;
+let ctx = null;
+let sig = new Float32Array(bsize);
+async function createScope() {
+// create AudioAnalyser node
+scopeNode = actx.createAnalyser();
+// set buffer size
+scopeNode.fftSize = bsize;
+// get 2d context from HTML canvas
+ctx = document.getElementById('scope').getContext('2d');
+// set the canvas width to match buffer size
+ctx.canvas.width = scopeNode.fftSize;
+// get the Csound node
+let node = await csound.getNode();
+// connect it to the scope node
+node.connect(scopeNode);
+// call scope drawing
+scopeDraw(0);
+}
+
+// this holds previous time stamp
+let before = 0;
+// display update period
+const period = 50;
+// draw the scope
+function scopeDraw(now) {
+// if the period has elapsed
+if(now - before > period) {
+// get the audio from the node
+scopeNode.getFloatTimeDomainData(sig);
+// clear the canvas
+ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+// start drawing
+ctx.beginPath();
+// create lines between samples
+for (let t = 0; t < sig.length; t++)
+ ctx.lineTo(t,ctx.canvas.height*(0.5 - sig[t]*0.5));
+// draw the plot
+ctx.stroke();
+// update time stamp
+before = now;
+}
+// call the animation frame to draw again.
+requestAnimationFrame(scopeDraw);
+}
+
+</script>
+<body>
+<h1>Nodes</h1>
+<p>
+<input type="button" id="start button" onclick="start()" value="OFF"> </input>
+</p>
+<p>
+  <canvas id='scope' width=512 height=200 style="border:1px solid#000000;">
+  </canvas>
+</p>
+
+<hr>
+<p><a href="./readme.html">README</a></p>
+<!-- hhmts start -->Last modified: Sat Feb  7 21:45:43 GMT 2026 <!-- hhmts end -->
+</body> </html>

@@ -104,8 +104,10 @@ Csound WASM API Reference
 -------
 
 The API reference for Csound WASM can be found in
-[wasm/browser](https://github.com/csound/csound/tree/master/wasm/browser)
-directory of the Csound [sources](https://github.com/csound/csound).
+[wasm/browser](https://github.com/csound/csound/tree/csound6/wasm/browser)
+(for Csound 6.x) or
+[wasm/browser](https://github.com/csound/csound/tree/develop/wasm/browser)
+(for Csound 7.x) directory of the Csound [sources](https://github.com/csound/csound). 
 
 Start Here
 -------
@@ -170,6 +172,10 @@ The following are the links to the web pages containing the tutorials
 in this guide. Except wherever noted all these html pages can be
 opened directly in the browser.
 
+### Csound 6.x
+
+These examples are written using the Csound 6.x API:
+
 1.[Ping](1.Ping/.): this demonstrates how to import
 Csound WASM, start an engine, compile code and play a sound in
 response to a user action.  
@@ -213,6 +219,43 @@ introduced to realise a web app with a p5.js interface.  Also
   available as a
   [sketch](https://editor.p5js.org/vlazzarini/sketches/4F4NBQ0Fy)
   on the p5.js editor environment.  
+  
+### Csound 7.0
+
+These examples are written using the Csound 7.0 API:
+
+1.[Ping](7.0/1.Ping/.): this demonstrates how to import
+Csound WASM, start an engine, compile code and play a sound in
+response to a user action.  
+2.[Penta](7.0/2.Penta/.): this example sets up a HTML5
+  button keyboard to control Csound events.  
+3.[Sliders](7.0/3.Sliders/): in this tutorial, we use HTML5
+  range input elements to control sound synthesis parameters.  
+4.[Plucks](7.0/4.Plucks/.): this shows how to evaluate code on
+the fly and display Csound console messages.  
+5.[Nodes](7.0/5.Nodes/.): this example places Csound within the
+ Web Audio API context and connecting to other audio Nodes.  
+6.[Stria](7.0/6.Stria/.): this demonstrates how to deal with
+server files and control playback of the numeric score. This example
+uses local files that need to be served over http and so can only
+be run from a server.  
+7.[Render](7.0/7.Render/.): this tutorial shows offline
+  rendering, as well as opening and downloading output audio
+  files. This example uses local files that need to be served over http and so can only
+  be run from a server.  
+8.[Reso](7.0/8.Reso/.): in this example, we
+  interface Csound with an external JS API, p5.js, which
+  provides realtime performance controls for the instrument.  
+9.[WTab](7.0/9.WTab/.): this demonstrates the use of
+  function tables and how to transfer data in and out of Csound to/from an
+  interactive graphical user interface provided by p5.js.  
+10.[Tonnetz](7.0/10.Tonnetz/.): this example introduces MIDI control,
+  with interactive graphics also provided by p5.js. This example
+  uses local files that need to be served over http and so can only 
+  be run from a server.  
+11.[Rubber](7.0/11.Rubber/.): in this tutorial, realtime input audio is
+introduced to realise a web app with a p5.js interface.  
+
 
 These tutorials can be accessed and forked from
 [github](https://github.com/vlazzarini/vanilla/).

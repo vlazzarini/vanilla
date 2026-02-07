@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Plucks</title>
+</head>
+
+<script type="text/javascript">
+const url =
+"https://cdn.jsdelivr.net/npm/@csound/browser@7.0.0-beta20/dist/csound.js";
+
+// csound is the Csound engine object (null as we start)
+let csound = null;
+
+// header code
+const head = `
+0dbfs = 1
+seed 0
+giNotes[] fillarray 45,48,52,55,60,62,64,67,69,72,74,76,79
+giAmps[] fillarray 0.05,0.1,0.2,0.3,0.4,0.6
+giDurs[] fillarray 0.3,0.075,0.1,0.2,0.15,0.4
+`;
+
+// recursion code
+const recurse = `
+instr 1
+prints "freq:%dHz",p5
+out linenr(pluck(p4,p5,p5,0,1),0,0.1,0.01)
+icps = cpsmidinn(giNotes[gauss(6)+6])
+iamp = giAmps[gauss(3)+3]
+schedule(1,giDurs[gauss(3)+3],800*iamp/icps,iamp,icps)      
+endin
+schedule(1,0,0.01,0.001,500)
+`;
+
+// stop code
+const stop = `
+instr 1
+out linenr(pluck(p4,p5,p5,0,1),0,0.1,0.01)     
+endin
+`;
+
+// instrument on/off state
+let isOn = false;
+
+// message handling
+function handleMessage(msg){
+// if running, display messages
+if (isOn) document.getElementById('mess').value = msg;
+// else just fill with blanks
+else document.getElementById('mess').value = " ";
+}
+
+// this is the JS function to start Csound
+// and toggle recursion on/off
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(url);
+// create a Csound engine object
+csound = await Csound();
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+// compile csound code
+await csound.compileOrc(head + recurse);
+// start the engine
+await csound.start();
+// add a listener for Csound messages
+await csound.on("message", handleMessage);
+// change text to ON
+document.getElementById("start button").value = "ON";
+// change colour to RED
+document.getElementById("start button").style.color = "red";
+}
+// if csound engine is running
+else {
+// check if instrument is running
+if(isOn) {
+// turn it off
+await csound.evalCode(stop)
+// change text to OFF
+document.getElementById("start button").value = "OFF";
+// change colour to black
+document.getElementById("start button").style.color = "black";
+} else {
+// turn it on
+await csound.evalCode(recurse)
+// change text to ON
+document.getElementById("start button").value = "ON";
+// change colour to red
+document.getElementById("start button").style.color = "red";
+}
+}
+// toggle instrument state
+isOn = !isOn;
+}
+
+</script>
+<body>
+<h1>Plucks</h1>
+<p>
+<input type="button" id="start button" onclick="start()" value="OFF"> </input>
+</p>
+  <textarea cols="80" rows="1" id="mess"></textarea>  
+<hr>
+<p><a href="./readme.html">README</a></p>
+<!-- hhmts start -->Last modified: Sat Feb  7 21:44:16 GMT 2026 <!-- hhmts end -->
+</body> </html>

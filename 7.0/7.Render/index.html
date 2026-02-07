@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+</head>
+
+<script type="text/javascript"> 
+// csound is the Csound engine object (null as we start)
+let csound = null;
+let filename = "audio.ogg"
+const url =
+"https://cdn.jsdelivr.net/npm/@csound/browser@7.0.0-beta20/dist/csound.js"
+
+// instrument on/off state
+let isOn = false;
+// CSD file name
+const csd = './hommage.csd'
+// this is the JS function to start Csound
+// and resume performance if needed
+async function start() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(url);
+// Csound engine object running on a worker thread
+csound = await Csound({useWorker: true});
+// copy the CSD file to the Csound local filesystem
+await copyUrlToLocal(csd,csd)
+// compile the code in the CSD file
+await csound.compileCSD(csd,0)
+// set the output file name
+await csound.setOption("-o"+filename);
+// set ogg encoding
+await csound.setOption("--ogg");
+// handle Csound messages
+await csound.on("message", handleMessage);
+// start the engine
+await csound.start();
+// on render end, call finish()
+await csound.on("renderEnded", finish);
+}
+}
+
+let sf = null;
+// this is called on render end
+async function finish() {
+// stop Csound and close output file
+await csound.reset();
+// copy output file and get a URL
+sf = await copyUrlFromLocal(filename, 'audio/ogg');
+// notify the console
+handleMessage("Complete: " + filename + " ready");
+// enable the download button
+document.getElementById('download').disabled = false;
+// enable the open button
+document.getElementById('open').disabled = false;
+}
+
+// this is called by the download button
+async function download() {
+// create an anchor element
+let a = document.createElement('a');
+// append it to html body
+document.body.appendChild(a);
+// set the anchor URL
+a.href = sf;
+// set the download name
+a.download = filename;
+// click on the element
+a.click();
+}
+
+// this is called by the open button
+async function openf() {
+// create an anchor element
+let a = document.createElement('a');
+// append it to html body
+document.body.appendChild(a);
+// set the anchor URL
+a.href = sf;
+// open in a different tab
+a.target = "_blank";
+// click on the element
+a.click();
+}
+
+// copy file from local and return a URL for it
+async function copyUrlFromLocal(src,t) {
+// get the file as a Uint8Array
+let data = await csound.fs.readFile(src);
+// create a data blob
+let destfile = new Blob([data.buffer], { type: t});
+// create a URL for it
+return window.URL.createObjectURL(destfile);
+}
+
+async function copyUrlToLocal(src, dest) {
+// fetch the file
+let srcfile = await fetch(src, {cache: "no-store"})
+// get the file data as an array
+let dat = await srcfile.arrayBuffer();
+// write the data as a new file in the filesystem
+await csound.fs.writeFile(dest, new Uint8Array(dat));
+}
+
+let count = 0;
+function handleMessage(message) {
+// get the display element (called console in the page)
+let element = document.getElementById('console');
+// add the message to HTML content (plus a newline)
+element.innerHTML += message + '\n';
+// focus on bottom, new messages make the display scroll down
+element.scrollTop = 99999;
+// clear display every 1000 lines
+if(count == 1000) {    
+count = 0;
+element.innerHTML == "";
+}
+count += 1;
+};
+
+
+</script>
+<body onload="start()">
+<H1>Render</H1>
+<input type="button" id="open" onclick="openf()" value="open" disabled>
+<input type="button" id="download" onclick="download()"
+value="download" disabled>
+</input>
+</p>
+<p>
+<textarea class="console" cols="80" rows="20" id="console">
+</textarea>
+<p>
+<hr>
+<p><a href="./readme.html">README</a></p>
+<!-- hhmts start -->Last modified: Sat Feb  7 22:01:09 GMT 2026 <!-- hhmts end -->
+</body> </html>
